@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/sms_prefix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/sms_prefix_hint" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/max_vote_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/max_vote_num_hint"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/vip_weight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/vip_weight"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/check_allow_vote_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/check_is_vote_to_one_allowed" />
+
+    <ToggleButton
+        android:id="@+id/toggle_allow_vote_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onToggleClicked"
+        android:textOff="@string/toggle_off"
+        android:textOn="@string/toggle_on" />
+    
+    <EditText
+        android:id="@+id/base_hour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/base_hour"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/start_point"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/start_point_hint"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/screen_width"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/screen_width_hint"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/screen_hight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/screen_hight_hint"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/paint_width"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/paint_width_hint"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/paint_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/paint_distance_hint"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/button_save_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="save"
+        android:text="@string/button_save" />
+
+</LinearLayout>

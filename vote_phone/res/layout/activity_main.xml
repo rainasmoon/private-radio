@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"    
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/list_team"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"        
+        android:text="@string/button_list_team"
+        android:onClick="listTeam" />
+
+    <Button
+        android:id="@+id/list_vip_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"        
+        android:text="@string/button_list_vip_phone"
+        android:onClick="listVipPhone" />
+    
+    <Button
+        android:id="@+id/show_list_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"       
+        android:text="@string/button_show_list_result" 
+        android:onClick="viewListResult"/>
+    
+    <Button
+        android:id="@+id/show_vote_chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"       
+        android:text="@string/button_show_vote_chart" 
+        android:onClick="viewVoteChart"/>
+    
+    <Button
+        android:id="@+id/show_full_chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"       
+        android:text="@string/button_show_full_chart" 
+        android:onClick="viewFullChart"/>
+    
+    <Button
+        android:id="@+id/start_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"       
+        android:text="@string/button_start_service" 
+        android:onClick="startService"/>
+
+    
+    <Button
+        android:id="@+id/show_illegal_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"       
+        android:text="@string/button_show_illegal_msg" 
+        android:onClick="showIllegalMsg"/>
+     
+    
+</LinearLayout>

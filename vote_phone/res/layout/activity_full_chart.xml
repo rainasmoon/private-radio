@@ -1,0 +1,49 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/vote_bg"
+    tools:context=".FullChartActivity" >
+
+    <LinearLayout
+        android:id="@+id/chart_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:orientation="horizontal" >
+        <TextView
+        android:id="@+id/text_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/hello_world" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true" >
+
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="?buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent" >
+
+            <ToggleButton
+                android:id="@+id/toggle_pause"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onToggleClicked"
+                android:textOff="@string/toggle_pause"
+                android:textOn="@string/toggle_on" />
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

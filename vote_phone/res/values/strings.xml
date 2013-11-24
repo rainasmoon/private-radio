@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">phone_poll</string>
+    <string name="button_show_list_result">show list result</string>
+    <string name="button_show_vote_chart">show vote chart</string>
+    <string name="button_show_full_chart">show full chart</string>
+    <string name="button_start_service">start</string>
+    <string name="button_stop_service">stop</string>
+    <string name="button_show_illegal_msg">show illegal msg</string>
+    <string name="menu_settings">settings</string>
+    <string name="menu_add_team">add</string>
+    <string name="menu_clear">clear</string>
+    <string name="menu_test">test</string>
+    <string name="menu_restore">restore</string>
+    <string name="menu_help">help</string>
+    <string name="menu_exit">exit</string>
+    <string name="sms_prefix_hint">input the sms\'s prefix</string>
+    <string name="max_vote_num_hint">input the max vote num, the default is 1</string>
+    <string name="vip_phone_hint">vip phone number</string>
+    <string name="vip_weight">vip weight here</string>
+    <string name="base_hour">base hour</string>
+    <string name="start_point_hint">start point</string>
+    <string name="screen_width_hint">screen width</string>
+    <string name="screen_hight_hint">screen hight</string>
+    <string name="paint_width_hint">paint width</string>
+    <string name="paint_distance_hint">paint distance</string>
+    <string name="title_activity_main">AIA</string>
+    <string name="title_activity_display_message">list result</string>
+    <string name="button_list_team">list team</string>
+    <string name="button_save">save</string>
+    <string name="help">help</string>
+    <string name="team_name_hint">input team name</string>
+    <string name="button_list_vip_phone">list vip phone</string>
+    <string name="check_is_vote_to_one_allowed">allowed to vote to one</string>
+    <string name="toggle_off">off</string>
+    <string name="toggle_on">on</string>
+    <string name="toggle_pause">pause</string>    
+    <string name="chart_title"></string>
+    <string name="hello_world"></string>
+    <string name="title_activity_full_chart">result</string>
+
+</resources>

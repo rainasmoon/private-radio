@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aiaa.anualdiner.phonevote"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" 
+        >
+
+        <activity
+            android:name="com.aiaa.anualdiner.phonevote.MainActivity"
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdiner.phonevote.SettingActivity"
+            android:label="@string/title_activity_display_message"
+            android:parentActivityName="com.aiaa.anualdiner.phonevote.MainActivity" 
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdiner.phonevote.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdiner.phonevote.ListTeamActivity"
+            android:label="@string/title_activity_display_message"
+            android:parentActivityName="com.aiaa.anualdiner.phonevote.MainActivity" 
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdiner.phonevote.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdiner.phonevote.AddTeamActivity"
+            android:label="@string/title_activity_display_message"
+            android:parentActivityName="com.aiaa.anualdiner.phonevote.ListTeamActivity" 
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdiner.phonevote.ListTeamActivity" />
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdiner.phonevote.ListVipPhoneActivity"
+            android:label="@string/title_activity_display_message"
+            android:parentActivityName="com.aiaa.anualdiner.phonevote.MainActivity" 
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdiner.phonevote.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdiner.phonevote.AddVipPhoneActivity"
+            android:label="@string/title_activity_display_message"
+            android:parentActivityName="com.aiaa.anualdiner.phonevote.ListVipPhoneActivity" 
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdiner.phonevote.ListVipPhoneActivity" />
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdiner.phonevote.DisplayListResultActivity"
+            android:label="@string/title_activity_display_message"
+            android:parentActivityName="com.aiaa.anualdiner.phonevote.MainActivity" 
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdiner.phonevote.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdiner.phonevote.CreateChartActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.aiaa.anualdiner.phonevote.MainActivity"
+            android:theme="@android:style/Theme.Dialog"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdiner.phonevote.MainActivity" />
+        </activity>
+        <activity android:name=".FullChartActivity"
+            android:label="@string/title_activity_full_chart"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullscreenTheme"
+            android:parentActivityName="com.aiaa.anualdinaer.phoneanswer.MainActivity"
+            android:screenOrientation="landscape">"
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdinaer.phoneanswer.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdiner.phonevote.ListIllegalMsgActivity"
+            android:label="@string/title_activity_display_message"
+            android:parentActivityName="com.aiaa.anualdiner.phonevote.MainActivity" 
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdiner.phonevote.MainActivity" />
+        </activity>
+        <!-- Service -->
+
+        <service
+            android:name="com.aiaa.anualdiner.phonevote.sms.BootService"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.aiaa.anualdiner.phonevote.StartService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+        
+    </application>
+
+</manifest>
+
+
+
