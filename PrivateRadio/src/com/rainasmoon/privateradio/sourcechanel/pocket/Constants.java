@@ -18,4 +18,6 @@ public abstract class Constants {
 	
 	public static String access_token = "1517fa04-7836-1953-4c41-0d2d1c";
 	
+	public static int DEFAULT_RETRIVE_LIMIT = 5;
+	
 }

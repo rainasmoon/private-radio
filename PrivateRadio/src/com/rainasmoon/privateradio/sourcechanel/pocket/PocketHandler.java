@@ -1,7 +1,10 @@
 package com.rainasmoon.privateradio.sourcechanel.pocket;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -93,7 +96,7 @@ public class PocketHandler extends Constants {
 		return access_token;
 	}
 
-	public String retrivePocketList() {
+	public List<String> retrivePocketList() {
 		try {
 			return retrivePoketListRaw();
 		} catch (ClientProtocolException e) {
@@ -106,11 +109,11 @@ public class PocketHandler extends Constants {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "你应该能查询出一个字符串来,为什么那个字希找不到呢....";
+		return Arrays.asList(new String[]{"没有最新的Pocket信息喽！！！"});
 
 	}
 
-	public String retrivePoketListRaw() throws JSONException,
+	public List<String> retrivePoketListRaw() throws JSONException,
 			ClientProtocolException, IOException {
 		check();
 
@@ -119,7 +122,7 @@ public class PocketHandler extends Constants {
 		JSONObject param = new JSONObject();
 		param.put("consumer_key", Constants.CONSUMER_KEY);
 		param.put("access_token", access_token);
-		param.put("count", 1);
+		param.put("count", DEFAULT_RETRIVE_LIMIT);
 		StringEntity se = new StringEntity(param.toString());
 
 		request.addHeader("X-Accept", "application/json");
@@ -132,20 +135,22 @@ public class PocketHandler extends Constants {
 		String retSrc = EntityUtils.toString(httpResponse.getEntity());
 		log.info("response list:" + retSrc);
 		JSONObject result = new JSONObject(retSrc);
-		//TODO: deal with the result.
+
+		List<String> l = new ArrayList<String>();
 		
-		//TODO: foucs on 
 		JSONObject list =   result.getJSONObject("list");
 		Iterator it = list.keys();
-		String key = (String) it.next();
-		JSONObject msg = list.getJSONObject(key);
+		while (it.hasNext()) {
+			String key = (String) it.next();
+			JSONObject msg = list.getJSONObject(key);
+			
+			String titile =  msg.getString("given_title");
+			l.add(titile);
+			log.info("array:" + titile);
+		}
 		
-		String titile =  msg.getString("given_title");
 		
-		log.info("array:" + titile);
-		
-		
-		return titile;
+		return l;
 	}
 
 	private void check() throws ClientProtocolException, JSONException,

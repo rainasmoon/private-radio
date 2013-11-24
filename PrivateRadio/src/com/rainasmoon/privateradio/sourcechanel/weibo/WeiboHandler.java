@@ -1,7 +1,10 @@
 package com.rainasmoon.privateradio.sourcechanel.weibo;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -27,7 +30,7 @@ public class WeiboHandler extends Constants {
 	java.util.logging.Logger log = java.util.logging.Logger.getLogger("wh:");
 
 
-	public String retriveWeiboList() {
+	public List<String> retriveWeiboList() {
 		try {
 			return retriveWeiboListRaw();
 		} catch (ClientProtocolException e) {
@@ -40,11 +43,11 @@ public class WeiboHandler extends Constants {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "你应该能查询出一个字符串来,为什么那个字希找不到呢....";
+		return Arrays.asList(new String[]{"微博没有更新喽！！！"});
 
 	}
 
-	public String retriveWeiboListRaw() throws JSONException,
+	public List<String> retriveWeiboListRaw() throws JSONException,
 			ClientProtocolException, IOException {
 		check();
 
@@ -60,11 +63,14 @@ public class WeiboHandler extends Constants {
 		JSONObject result = new JSONObject(retSrc);
 		
 		JSONArray list =   result.getJSONArray("statuses");
-		JSONObject msg = (JSONObject) list.get(0);
-		log.info("response list:" + msg.getString("text"));
+		List<String>  l = new ArrayList<String>();
+		for (int i=0; i< list.length(); i++) {
+			JSONObject msg = (JSONObject) list.get(i);
+			log.info("response list:" + msg.getString("text"));
+			l.add(msg.getString("text"));
+		}
 		
-		
-		return msg.getString("text");
+		return l;
 	}
 
 	private void check() throws ClientProtocolException, JSONException,

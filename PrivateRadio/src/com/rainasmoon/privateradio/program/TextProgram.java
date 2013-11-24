@@ -12,6 +12,7 @@ import com.rainasmoon.privateradio.business.TtsHandler;
 public class TextProgram  extends Program implements Play {
 
 	private String article;
+	private TtsHandler ttsHandler;
 	
 	public TextProgram(String article) {
 		this.article = article;
@@ -19,7 +20,7 @@ public class TextProgram  extends Program implements Play {
 
 	@Override
 	public void play() {
-		TtsHandler ttsHandler = new TtsHandler();
+		ttsHandler = new TtsHandler();
 		
 		try {
 			ttsHandler.speakChineseTts(article);
@@ -34,6 +35,11 @@ public class TextProgram  extends Program implements Play {
 	public void getDuration() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	@Override
+	public void stop() {
+		ttsHandler.stop();
 	}
 
 	

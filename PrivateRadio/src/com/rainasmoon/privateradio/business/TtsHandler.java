@@ -58,7 +58,7 @@ public class TtsHandler {
 			@Override
 			public void onAudioFocusChange(int focusChange) {
 
-				stop();
+//				stop();
 
 			}
 
@@ -121,7 +121,7 @@ public class TtsHandler {
 		
 	}
 	
-	private void stop() {
+	public void stop() {
 		mSpeech.stop();
 		mSpeech.shutdown();
 	}

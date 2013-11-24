@@ -1,5 +1,6 @@
 package com.rainasmoon.privateradio.program;
 
+import java.io.File;
 import java.io.IOException;
 
 import android.content.Context;
@@ -15,6 +16,7 @@ public class AudioProgram extends Program implements Play {
 
 	private long id;
 	private Uri uri;
+	private File file;
 	
 	public AudioProgram(long id) {
 		this.id = id;
@@ -24,10 +26,12 @@ public class AudioProgram extends Program implements Play {
 		this.uri = uri;
 	}
 	
+	public AudioProgram(File f) {
+		file = f;
+	}
+
 	@Override
 	public void play() {
-		// TODO Auto-generated method stub
-
 		
 		
 		final MediaPlayHandler handler = new MediaPlayHandler();
@@ -39,6 +43,10 @@ public class AudioProgram extends Program implements Play {
 			}
 			if (uri != null) {
 				handler.playUriSong(uri);
+			}
+			if (file != null) {
+				Uri u = Uri.fromFile(file);
+				handler.playUriSong(u);
 			}
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
