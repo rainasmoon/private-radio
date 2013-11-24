@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PhoneAnswer</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="answer_hint">the answer here</string>
+    <string name="button_save">save</string>
+    <string name="button_list_answer">list answer</string>
+    <string name="button_list_winner">list winner</string>
+    <string name="button_list_all_gamer">list all msg</string>
+    <string name="button_start">start listening SMS</string>
+    <string name="button_pause">pause</string>
+    <string name="button_stop">stop</string>
+    <string name="button_previous">previous game</string>
+    <string name="button_next">next game</string>
+    <string name="menu_settings">settings</string>
+    <string name="menu_add_team">add</string>
+    <string name="menu_clear">clear</string>
+    <string name="menu_test">test</string>
+    <string name="menu_restore">restore</string>
+    <string name="menu_help">help</string>
+    <string name="menu_exit">exit</string>
+    <string name="toggle_pause">pause</string>
+    <string name="toggle_on">on</string>
+    
+    <string name="sms_prefix_hint">input the sms\'s prefix</string>
+    <string name="num_winners_hint">how many winners</string>
+    <string name="num_gamers_hint">the max gammers will get msg</string>
+    <string name="base_hour">base hour</string>
+
+</resources>

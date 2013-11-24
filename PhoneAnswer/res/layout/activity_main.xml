@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/list_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="listAnswer"
+        android:text="@string/button_list_answer" />
+
+    <Button
+        android:id="@+id/list_winner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="listWinner"
+        android:text="@string/button_list_winner" />
+    <Button
+        android:id="@+id/list_all_gamer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="listAllMsg"
+        android:text="@string/button_list_all_gamer" />
+    
+    <Button
+        android:id="@+id/button_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="startService"
+        android:text="@string/button_start" />
+
+    <ToggleButton
+        android:id="@+id/toggle_pause"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onToggleClicked"
+        android:textOff="@string/toggle_pause"
+        android:textOn="@string/toggle_on" />
+
+
+
+    <Button
+        android:id="@+id/button_previous"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="previousGame"
+        android:text="@string/button_previous" />
+
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="nextGame"
+        android:text="@string/button_next" />
+
+    <TextView
+        android:id="@+id/text_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/hello_world" />
+
+</LinearLayout>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aiaa.anualdinaer.phoneanswer"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.aiaa.anualdinaer.phoneanswer.MainActivity"
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdinaer.phoneanswer.SettingActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.aiaa.anualdinaer.phoneanswer.MainActivity" 
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdinaer.phoneanswer.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdinaer.phoneanswer.ListAnswerActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.aiaa.anualdinaer.phoneanswer.MainActivity" 
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdinaer.phoneanswer.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdinaer.phoneanswer.ListWinnerActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.aiaa.anualdinaer.phoneanswer.MainActivity" 
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdinaer.phoneanswer.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdinaer.phoneanswer.ListAllGamersActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.aiaa.anualdinaer.phoneanswer.MainActivity" 
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdinaer.phoneanswer.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.aiaa.anualdinaer.phoneanswer.AddAnswerActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.aiaa.anualdinaer.phoneanswer.ListAnswerActivity" 
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aiaa.anualdinaer.phoneanswer.ListTeamActivity" />
+        </activity>
+        <!-- Service -->
+
+        <service
+            android:name="com.aiaa.anualdinaer.sms.BootService"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.aiaa.anualdinaer.sms.StartService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>
