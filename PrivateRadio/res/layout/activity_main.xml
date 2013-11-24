@@ -1,0 +1,85 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0099cc"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/start_radio"
+            style="?buttonBarButtonStyle"
+            android:background="#9933CC"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:onClick="startRadio"
+            android:text="@string/button_start_radio" />
+
+        <Button
+            android:id="@+id/stop_radio"
+            style="?buttonBarButtonStyle"
+            android:background="#669900"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:onClick="stopRadio"
+            android:text="@string/button_stop_radio" />
+
+        <Button
+            android:id="@+id/like_it"
+            style="?buttonBarButtonStyle"
+            android:background="#CC0000"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:onClick="likeIt"
+            android:text="@string/button_like_it" />
+
+        <Button
+            android:id="@+id/unlike_it"
+            style="?buttonBarButtonStyle"
+            android:background="#FF8800"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:onClick="unlikeIt"
+            android:text="@string/button_unlike_it" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true" >
+
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="?buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent" >
+
+            <!-- 
+            <Button
+                android:id="@+id/dummy_button"
+                style="?buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dummy_button" />
+            
+             -->
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>
