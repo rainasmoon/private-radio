@@ -1,0 +1,61 @@
+开始建库
+[root@localhost ~]# svnadmin create /home/hht/program/svnroot
+
+修改登录权限
+[root@localhost ~]# vi /home/hht/program/svnroot/conf/svnserve.conf
+
+去掉anon-access = read前面的#.......将read 改为write
+
+网上的文档都说要去掉 [general] 前面的注释
+
+我这里不用，因为系统本身就已经去掉了
+
+开始导入
+[root@localhost ~]# svn import /home/hht/workspace/babysitter file:///home/hht/program/svnroot -m "init"
+
+导入之后启动服务
+root@localhost ~]# svnserve -d -r /home/hht/program/svnroot
+
+可以用 #lsof -i :3690 查看是否开启
+
+修改防火墙配置
+iptables -A INPUT -i eth0 -p tcp --dport 3690 -j ACCEPT
+service iptables save
+
+
+**************************************************************************************
+
+在Fedora 8上安装配置SVN，应按照以下步骤进行：
+
+安装subversion
+# yum install svn
+
+创建svn代码库，并修改权限
+# mkdir -p /var/svn
+# svnadmin create /var/svn/myproject
+# chown -R apache.apache /var/svn
+
+注意：修改所有者为apache，是为了能够通过http访问。
+
+启动svn访问模式
+$ svnserve --daemon --root=/var/svn --listen-port=3690
+注意：不推荐用root用户启动服务；默认端口号为3690。
+
+启动http访问模式。配置Apache，加下面的内容到/etc/httpd/conf/httpd.conf中：
+LoadModule dav_svn_module modules/mod_dav_svn.so
+LoadModule authz_svn_module modules/mod_authz_svn.so
+
+DAV svn
+SVNParentPath /var/svn
+
+注意：如果/etc/httpd/conf.d目录下有subversion.conf配置文件，则只需要将被注释掉的内容放开即可，不要在httpd.conf文件中加入重复的内容。
+
+重新启动Apache
+# apachectl restart
+
+修改SELINUX权限
+# chcon -R -h -u system_u -t httpd_sys_content_t /var/svn
+注意：在SELINUX中，安全性得到了加强。如果不进行这样的修改，客户端访问时就会报错“Could not open the requested SVN filesystem.”。
+
+客户端访问
+Linux下可直接通过命令行"svn XXXX"来访问，Windows下推荐安装客户端TortoiseSVN，然后利用鼠标右键，进行import、export、add、remove、diff、merge、update、commit等操作。 

@@ -1,0 +1,62 @@
+Cannot complete the install because one or more required items could not be found.
+  Software being installed: M2Eclipse Extensions Development Support (Optional) 0.12.1.20110112-1712 (org.maven.ide.eclipse.sdk.feature.feature.group 0.12.1.20110112-1712)
+  Missing requirement: Maven Integration Tests Plug-in 0.12.1.20110112-1712 (org.maven.ide.eclipse.integration.tests.common 0.12.1.20110112-1712) requires 'bundle org.hamcrest 0.0.0' but it could not be found
+  Cannot satisfy dependency:
+    From: M2Eclipse Extensions Development Support (Optional) 0.12.1.20110112-1712 (org.maven.ide.eclipse.sdk.feature.feature.group 0.12.1.20110112-1712)
+    To: org.maven.ide.eclipse.integration.tests.common [0.12.1.20110112-1712]
+
+Your original request has been modified.
+  Graphical Editing Framework Draw2d will be ignored because it is already installed, and updates are not permitted.
+  Graphical Editing Framework Draw2d Source Feature will be ignored because it is already installed, and updates are not permitted.
+  Graphical Editing Framework GEF will be ignored because it is already installed, and updates are not permitted.
+  "Graphical Editing Framework GEF Examples" is already installed, so an update will be performed instead.
+  "Graphical Editing Framework GEF Examples Source Feature" is already installed, so an update will be performed instead.
+  Graphical Editing Framework GEF Source Feature will be ignored because it is already installed, and updates are not permitted.
+Cannot complete the install because of a conflicting dependency.
+  Software being installed: Graphical Editing Framework Zest Visualization Toolkit SDK 1.2.0.v20100519-2050-67918COKNHAKQZIHNTdWQTdUL7UM (org.eclipse.zest.sdk.feature.group 1.2.0.v20100519-2050-67918COKNHAKQZIHNTdWQTdUL7UM)
+  Software currently installed: Shared profile 1.0.0.1301778082065 (SharedProfile_PlatformProfile 1.0.0.1301778082065)
+  Only one of the following can be installed at once: 
+    Graphical Editing Framework Zest Visualization Toolkit 1.2.0.v20100519-2050-67818yE6F-AA7P4B8I52322 (org.eclipse.zest.feature.jar 1.2.0.v20100519-2050-67818yE6F-AA7P4B8I52322)
+    Graphical Editing Framework Zest Visualization Toolkit 1.2.0.v20100913-2020 (org.eclipse.zest.feature.jar 1.2.0.v20100913-2020)
+  Cannot satisfy dependency:
+    From: Shared profile 1.0.0.1301778082065 (SharedProfile_PlatformProfile 1.0.0.1301778082065)
+    To: org.eclipse.zest.feature.jar [1.2.0.v20100913-2020]
+  Cannot satisfy dependency:
+    From: Graphical Editing Framework Zest Visualization Toolkit 1.2.0.v20100519-2050-67818yE6F-AA7P4B8I52322 (org.eclipse.zest.feature.group 1.2.0.v20100519-2050-67818yE6F-AA7P4B8I52322)
+    To: org.eclipse.zest.feature.jar [1.2.0.v20100519-2050-67818yE6F-AA7P4B8I52322]
+  Cannot satisfy dependency:
+    From: Graphical Editing Framework Zest Visualization Toolkit SDK 1.2.0.v20100519-2050-67918COKNHAKQZIHNTdWQTdUL7UM (org.eclipse.zest.sdk.feature.group 1.2.0.v20100519-2050-67918COKNHAKQZIHNTdWQTdUL7UM)
+    To: org.eclipse.zest.feature.group [1.2.0.v20100519-2050-67818yE6F-AA7P4B8I52322]
+
+Your original request has been modified.
+  Graphical Editing Framework Draw2d will be ignored because it is already installed, and updates are not permitted.
+  Graphical Editing Framework Draw2d Source Feature will be ignored because it is already installed, and updates are not permitted.
+  Graphical Editing Framework GEF will be ignored because it is already installed, and updates are not permitted.
+  "Graphical Editing Framework GEF Examples" is already installed, so an update will be performed instead.
+  "Graphical Editing Framework GEF Examples Source Feature" is already installed, so an update will be performed instead.
+  Graphical Editing Framework GEF Source Feature will be ignored because it is already installed, and updates are not permitted.
+Cannot complete the install because of a conflicting dependency.
+  Software being installed: Graphical Editing Framework GEF All-In-One SDK 3.6.2.v20110128-0100-787D37PhSz-RXo9Es3q678N0tMQO (org.eclipse.gef.all.feature.group 3.6.2.v20110128-0100-787D37PhSz-RXo9Es3q678N0tMQO)
+  Software currently installed: Shared profile 1.0.0.1301778082065 (SharedProfile_PlatformProfile 1.0.0.1301778082065)
+  Only one of the following can be installed at once: 
+    Graphical Editing Framework Zest Visualization Toolkit 1.2.0.v20100519-2050-67818yE6F-AA7P4B8I52322 (org.eclipse.zest.feature.jar 1.2.0.v20100519-2050-67818yE6F-AA7P4B8I52322)
+    Graphical Editing Framework Zest Visualization Toolkit 1.2.0.v20100913-2020 (org.eclipse.zest.feature.jar 1.2.0.v20100913-2020)
+  Cannot satisfy dependency:
+    From: Shared profile 1.0.0.1301778082065 (SharedProfile_PlatformProfile 1.0.0.1301778082065)
+    To: org.eclipse.zest.feature.jar [1.2.0.v20100913-2020]
+  Cannot satisfy dependency:
+    From: Graphical Editing Framework GEF All-In-One SDK 3.6.2.v20110128-0100-787D37PhSz-RXo9Es3q678N0tMQO (org.eclipse.gef.all.feature.group 3.6.2.v20110128-0100-787D37PhSz-RXo9Es3q678N0tMQO)
+    To: org.eclipse.zest.sdk.feature.group [1.2.0.v20100519-2050-67918COKNHAKQZIHNTdWQTdUL7UM]
+  Cannot satisfy dependency:
+    From: Graphical Editing Framework Zest Visualization Toolkit 1.2.0.v20100519-2050-67818yE6F-AA7P4B8I52322 (org.eclipse.zest.feature.group 1.2.0.v20100519-2050-67818yE6F-AA7P4B8I52322)
+    To: org.eclipse.zest.feature.jar [1.2.0.v20100519-2050-67818yE6F-AA7P4B8I52322]
+  Cannot satisfy dependency:
+    From: Graphical Editing Framework Zest Visualization Toolkit SDK 1.2.0.v20100519-2050-67918COKNHAKQZIHNTdWQTdUL7UM (org.eclipse.zest.sdk.feature.group 1.2.0.v20100519-2050-67918COKNHAKQZIHNTdWQTdUL7UM)
+    To: org.eclipse.zest.feature.group [1.2.0.v20100519-2050-67818yE6F-AA7P4B8I52322]
+
+    
+    Failure to transfer org.springframework:spring-webmvc:jar:3.0.4.RELEASE 
+    from http://repo1.maven.org/maven2 was cached in the local repository, 
+    resolution will not be reattempted until the update interval of offical has elapsed or updates are forced. 
+    Original error: Could not transfer artifact org.springframework:spring-webmvc:jar:3.0.4.RELEASE from/to offical (http://repo1.maven.org/maven2): 
+    No response received after 60000

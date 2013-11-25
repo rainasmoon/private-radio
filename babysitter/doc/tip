@@ -1,0 +1,47 @@
+http://download.eclipse.org/tools/gef/updates/releases/
+
+http://eclipse-cs.sf.net/update/
+
+subversion
+
+http://m2eclipse.sonatype.org/sites/m2e
+
+site
+
+nexus : admin/admin123
+/usr/program/nexus-oss-webapp-1.9.0.2-bundle/nexus-oss-webapp-1.9.0.2/bin/jsw/linux-x86-64/nexus start
+
+http://localhost:8081/nexus/content/groups/public/
+
+mvn clean install -Dmaven.test.skip=true
+
+h2
+
+jetty
+
+/home/hht/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0
+
+selenium
+
+http://localhost:8080/mini-web/login.action
+
+http://localhost:8082/login.do?jsessionid=dbcb25be7fcbefb826145043e3e282b9
+
+http://localhost:8080/showcase/jms/index.action
+
+svnadmin create /home/hht/program/svnroot
+svnserve -d -r /home/hht/program/svnroot
+iptables -A INPUT -i eth0 -p tcp --dport 3690 -j ACCEPT
+service iptables save
+
+hudon/jenkins
+
+http://localhost:8082
+
+/home/hht/workspace/babysitter/bin/run.sh
+
+http://localhost:8081/nexus/content/groups/public/
+http://localhost:8082/login.jsp?jsessionid=8e9ce4854fb81f9ceaa6c052d3af8684
+http://localhost:8080/
+http://localhost:8090/
+

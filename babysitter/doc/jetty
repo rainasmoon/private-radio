@@ -1,0 +1,18 @@
+ Eclipse中用Maven来启动Jetty调试Web应用
+
+1、先来配置一个外部工具，来运行JETTY：
+ 选择菜单Run->External Tools->External Tools ...在左边选择Program，再点New：
+ 配置Location为mvn完整命令行。定位到bin下的mvn.bat
+ 选择Working Directory为本项目。
+ Arguments填写：jetty:run
+ 再点选Enviroment页：加入MAVEN_OPTS变量，值为：
+ -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8080,server=y,suspend=y
+ 其中，如果suspend=n 表示不调试，直接运行。address=8080为端口
+ 然后，点APPLY，点击Run启动jetty
+ 
+2、调试应用
+ 点选run->debug...
+ 选中左树中的Remote Java Application，再点New。
+ 选择你的项目，关键是要填和之前设置外部工具时相同的端口号，其它都不变。
+ 
+注意：停止调试后，8080端口并没有关闭，再运行run->debug后会报错，具体原因没有去深究。建议采用TcpView等工具关闭对应端口的进程 

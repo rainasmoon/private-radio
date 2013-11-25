@@ -1,0 +1,236 @@
+subversion(简称svn)是近年来崛起的版本管理工具，是cvs的接班人。目前，绝大多数开源软件都使用svn作为代码版本管理软件。
+
+svn服务器有2种运行方式：独立服务器和借助apache。2种方式各有利弊。
+
+svn存储版本数据也有2种方式：BDB和FSFS。因为BDB方式在服务器中断时，有可能锁住数据(我在搞ldap时就深受其害，没法根治)，所以还是FSFS方式更安全一点。
+
+1.安装subversion:
+
+yum install subversion.i386
+
+(注;在mandriva下面需要安装urpmi subversion subversion-server subversion-tool)
+
+2、创建subversion版本库，并修改权限
+
+# mkdir -p #SVNPATH/repos
+
+# svnadmin create #SVNPATH/repos/project1
+
+3、启动subversion服务，并设置版本库位置
+
+# svnserve --daemon --root=#SVNPATH/repos --listen-port=3690
+
+注：不推荐使用root用户启动服务，默认端口号为3690
+
+4.# yum list mod_dav_svn
+
+注：可以发现与mod_dav_svn相关的包mod_dav_svn.i386，安装mod_dav_svn.i386
+
+# yum install mod_dav_svn.i386
+
+注：安装完成后可以发现在/etc/httpd/conf.d文件夹下，自动产生了subversion.conf文件，而且自动添加了如下两行：
+
+LoadModule dav_svn_module modules/mod_dav_svn.so
+
+LoadModule authz_svn_module modules/mod_authz_svn.so
+
+将......之间的内容改为如下内容：
+
+DAV svn
+
+SVNPath #SVNPATH/repos/project1
+
+5、重新启动Apache服务
+
+# apachectl restart
+
+6、修改SELINUX权限
+
+# chcon -R -h -u system_u -t httpd_sys_content_t #SVNPATH/repos
+
+7.可以用#lsof-i:3690查看是否开启
+
+8.修改配置文件/home/svnroot/repository/conf/svnserve.conf
+
+[general]
+
+#匿名访问的权限，可以是read,write,none,默认为read
+
+anon-access = none
+
+#认证用户的权限，可以是read,write,none,默认为write
+
+auth-access = write
+
+#密码数据库的路径，去掉前面的#
+
+password-db = passwd
+
+#用户操作权限#
+
+authz-db = authz
+
+修改配置文件passwd
+
+[users]
+
+user = passwod
+
+user1 = password1
+
+修改配置文件authz
+
+[test1:/]
+
+user = rw
+
+[test1:/doc]
+
+user1 = rw
+
+9.对于单个代码仓库
+
+启动命令 svnserve -d -r /home/svnroot/repository/test1 --listen-host 192.168.1.18
+
+其中-d表示在后台运行，-r指定服务器的根目录，这样访问服务器时就可以直接用svn://服务器ip来访问了。如果服务器有多ip的话--listen-host来指定监听的ip地址。
+
+我们可以在svn客户端中通过svn://192.168.1.18来访问svn服务器。
+
+对于多个代码仓库，我们在启动时也可以用-r选项来指定服务器根目录，但访问时需要写上每个仓库相对于svn根目录的相对路径。
+
+比如，我们有两个代码仓库/home/svnroot/repository/test1 和/home/svnroot/repository/test2，我们用svnserve -d -r /home/svnroot/repository --listen-host 192.168.1.18来启动，那么在客户端访问时可以用svn://192.168.1.18/test1和svn://192.168.1.200 /test2来分别访问两个项目
+
+启动完成以后，我们可以用ps aux|grep svnserv来查看是否存在svnserve进程。
+
+10.开放服务器端口
+
+SVN默认端口是3690，你需要在防火墙上开放这个端口。
+
+/sbin/iptables -A INPUT -i eth0 -p tcp --dport 3690 -j ACCEPT
+
+/sbin/service iptables save
+
+你也可以通过svnserve的--listen-port选项来指定一个已经开放的其他端口，不过这样的话客户端使用也必须加上端口，如svn://192.168.1.18:9999/。
+
+11.yum 有一个有趣的用法: yum whatprovides mod_dav_svn.so
+
+12.在mandriva下要安装mod_dav.so,可以用urpmi apache-mod_dav_svn
+
+
+****************************************************************************************************
+
+Fedora 12 安装配置subversion
+
+svn服务器有2种运行方式：独立服务器和借助apache。2种方式各有利弊。
+
+svn存储版本数据也有2种方式：BDB和FSFS。因为BDB方式在服务器中断时，有可能锁住数据(我在搞ldap时就深受其害，没法根治)，所以还是FSFS方式更安全一点。
+
+ 
+
+1.安装subversion:
+
+yum install subversion.i386
+
+(注;在mandriva下面需要安装urpmi subversion subversion-server subversion-tool)
+
+2、创建subversion版本库，并修改权限
+
+# mkdir -p #SVNPATH/repos
+
+# svnadmin create #SVNPATH/repos/project1
+
+3、启动subversion服务，并设置版本库位置
+
+# svnserve --daemon --root=#SVNPATH/repos --listen-port=3690
+
+注：不推荐使用root用户启动服务，默认端口号为3690
+
+4.# yum list mod_dav_svn
+
+注：可以发现与mod_dav_svn相关的包mod_dav_svn.i386，安装mod_dav_svn.i386
+
+# yum install mod_dav_svn.i386
+
+注：安装完成后可以发现在/etc/httpd/conf.d文件夹下，自动产生了subversion.conf文件，而且自动添加了如下两行：
+
+LoadModule dav_svn_module modules/mod_dav_svn.so
+
+LoadModule authz_svn_module modules/mod_authz_svn.so
+
+将......之间的内容改为如下内容：
+
+DAV svn
+
+SVNPath #SVNPATH/repos/project1
+
+5、重新启动Apache服务
+
+# apachectl restart
+
+6、修改SELINUX权限
+
+# chcon -R -h -u system_u -t httpd_sys_content_t #SVNPATH/repos
+
+7.可以用#lsof-i:3690查看是否开启
+
+8.修改配置文件/home/svnroot/repository/conf/svnserve.conf
+
+[general]
+
+#匿名访问的权限，可以是read,write,none,默认为read
+
+anon-access = none
+
+#认证用户的权限，可以是read,write,none,默认为write
+
+auth-access = write
+
+#密码数据库的路径，去掉前面的#
+
+password-db = passwd
+
+#用户操作权限#
+
+authz-db = authz
+
+修改配置文件passwd
+
+[users]
+
+user = passwod
+
+user1 = password1
+
+修改配置文件authz
+
+[test1:/]
+
+user = rw
+
+[test1:/doc]
+
+user1 = rw
+
+9.对于单个代码仓库
+
+启动命令 svnserve -d -r /home/svnroot/repository/test1 --listen-host 192.168.1.18
+
+其中-d表示在后台运行，-r指定服务器的根目录，这样访问服务器时就可以直接用svn://服务器ip来访问了。如果服务器有多ip的话--listen-host来指定监听的ip地址。
+
+我们可以在svn客户端中通过svn://192.168.1.18来访问svn服务器。
+
+对于多个代码仓库，我们在启动时也可以用-r选项来指定服务器根目录，但访问时需要写上每个仓库相对于svn根目录的相对路径。
+
+比如，我们有两个代码仓库/home/svnroot/repository/test1和/home/svnroot/repository /test2，我们用svnserve -d -r/home/svnroot/repository --listen-host192.168.1.18来启动，那么在客户端访问时可以用svn://192.168.1.18/test1和svn: //192.168.1.200/test2来分别访问两个项目
+
+启动完成以后，我们可以用ps aux|grep svnserv来查看是否存在svnserve进程。
+
+10.开放服务器端口
+
+SVN默认端口是3690，你需要在防火墙上开放这个端口。
+
+/sbin/iptables -A INPUT -i eth0 -p tcp --dport 3690 -j ACCEPT
+
+/sbin/service iptables save
+
+你也可以通过svnserve的--listen-port选项来指定一个已经开放的其他端口，不过这样的话客户端使用也必须加上端口，如svn://192.168.1.18:9999/。 

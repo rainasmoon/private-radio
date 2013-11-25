@@ -1,0 +1,67 @@
+安装时有些小问题值得注意:
+　　
+　　1、下载时注意Eclipse和Lomboz版本号很重要
+　　
+　　一般来说相同版本号的才比较兼容。
+　　
+　　即：2.0的Eclipse对应插件就装2.0的Lomboz；Eclipse3.01就对应装插件lomboz.301，这样不容易出错，下载时最好认真看清楚网站上的说明，否则有时安装总出现莫名其妙的问题，浪费时间。
+　　
+　　2、安装Lomboz需要gef和emf插件的支持，所以光下载安装 Eclipse3.01,和lomboz.301.zip还不够，必须下载以下四个插件：
+　　
+　　Eclipse3.01
+　　lomboz.301.zip
+　　GEF-runtime-3.0.1.zip
+　　emf-sdo-runtime-2.0.0.zip
+　　
+　　这一点很容易被忽视，结果安装时有时就会碰到一个问题：
+　　
+　　按照步骤安装好后，启动Eclipse，结果【window】--->【Preference】左侧菜单上跟本找不到lomboz一项。
+　　
+　　而在【Help】-->【About Eclipse Platform】--->【Plug-in Details】 里面查看，却又明明显示lomboz插件已都安装好了。这个问题折腾了我半天，网上一些中文安装教程都没明确说清楚，其实要安装好lomboz，gef和 emf这两个插件也是需要装的。
+　　
+　　3、有时启动Eclipse未加载插件，解决方法很多，总结一下：
+　　
+　　a 、 删除整个目录/eclipse/configuration/org.eclipse.update/，重启Eclipse
+　　
+　　b 、在启动Eclipse时带上 -clean参数
+　　如：d:\eclipse\eclipse.exe -clean
+　　
+　　c 、 如果Eclipse启动找不到插件了，解决办法: 在/configuration/config.ini文件中加入一行
+　　osgi.checkConfiguration=true
+　　这样它会寻找并安装插件，找到后可以把那行再注释掉，这样以后每次启动就不会因寻找插件而显得慢了。
+　　
+　　4、为了便于管理众多插件，建议用links方式安装各种eclipse插件
+　　
+　　Eclipse基础－－使用links方式安装Eclipse插件
+　　
+　　eclispe想必大家都很熟悉了，一般来说，eclipse插件都是安装在plugins目录下。不过这样一来，当安装了许多插件之后，eclipse变的很大，最主要的是不便于更新和管理众多插件。用links方式安装eclipse插件，可以解决这个问题。
+　　
+　　当前配置XP SP1，eclipse3.0.1
+　　
+　　现在假设我的eclipse安装目录是D:\eclipse，待安装插件目录是D:\plug-in ，我将要安装LanguagePackFeature（语言包）、emf-sdo-xsd-SDK、GEF-SDK、Lomboz这四个插件。
+　　
+　　先把这四个插件程序全部放在D:\plug-in目录里，分别解压。如Lomboz3.0.1.zip解压成Lomboz3.0.1目录，这个目录包含一个plugins目录，要先在Lomboz3.0.1目录中新建一个子目录eclipse，然后把plugins目录移动到刚建立的eclipse 目录中，即目录结构要是这样的：D:\plug-in\Lomboz3.0.1\eclipse\plugins
+　　
+　　Eclipse 将会到指定的目录下去查找 eclipse\features 目录和eclipse\plugins 目录，看是否有合法的功能部件和（或）插件。也就是说，目标目录必须包含一个 \eclipse 目录。如果找到，附加的功能部件和插件在运行期配置是将是可用的，如果链接文件是在工作区创建之后添加的，附加的功能部件和插件会作为新的配置变更来处理。
+　　
+　　其它压缩文件解压后若已经包含eclipse\plugins目录，则不需要建立eclipse目录。
+　　
+　　然后在 eclipse安装目录D:\eclipse目录中建立一个子目录links，在links目录中建立一个link文件，比如　 LanguagePackFeature.link，改文件内容为　path=D:/plug-in/LanguagePackFeature　即这个 link文件要对应一个刚解压后的插件目录。
+　　
+　　说明：
+　　
+　　1. 插件可以分别安装在多个自定义的目录中。
+　　
+　　2. 一个自定义目录可以安装多个插件。
+　　
+　　3. link文件的文件名及扩展名可以取任意名称，比如ddd.txt，myplugin都可以。
+　　
+　　4. link文件中path=插件目录的path路径分隔要用\\或是/
+　　
+　　5. 在links目录也可以有多个link文件，每个link文件中的path参数都将生效。
+　　
+　　6. 插件目录可以使用相对路径。
+　　
+　　7. 可以在links目录中建立一个子目录，转移暂时不用的插件到此子目录中，加快eclipse启动。
+　　
+　　8.　如果安装后看不到插件，把eclipse 目录下的configuration目录删除，重启即可。 
