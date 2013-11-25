@@ -1,0 +1,56 @@
+************************************************************
+IMPORTANT
+************************************************************
+
+//禁止按回车提交
+      $(document).ready(function(){
+       $("input[@type='text']").each(
+            function(){
+                $(this).keypress( function(e) {
+                        var key = window.event ? e.keyCode : e.which;
+                        if(key.toString() == "13"){
+                                    return false;
+
+                        }
+                });
+            });
+        })
+
+************************************************************
+IMPORTANT
+************************************************************
+你把div 的width设置成auto就行了
+document.getElementById("你div的ID").clientWidth; 就是你Div的宽度
+
+************************************************************
+IMPORTANT
+************************************************************ 
+  @JsonIgnoreProperties(value={"hibernateLazyInitializer"})      
+   @Action(results={@Result(type="json", name="", params={"excludeProperties", "gen.hibernateLazyInitializer"})}) 
+   
+************************************************************
+IMPORTANT
+************************************************************   
+   <filter>
+  <filter-name>hibernateFilter</filter-name>
+  <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+  <init-param>
+   <param-name>sessionFactoryBeanName</param-name>
+   <param-value>sessionFactory</param-value>
+  </init-param>
+ </filter>
+
+<filter-mapping>
+  <filter-name>hibernateFilter</filter-name>
+  <url-pattern>*.action</url-pattern>
+ </filter-mapping>
+ 
+ <filter-mapping>
+  <filter-name>hibernateFilter</filter-name>
+  <url-pattern>*.do</url-pattern>
+ </filter-mapping>
+ 
+ 
+ <%@ include file=” ”%>
+<jsp:include page=” ” flush=”true”/>
+ 

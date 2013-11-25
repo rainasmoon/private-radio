@@ -1,0 +1,33 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <style type="text/css">  
+  v\:* { behavior:url(#default#VML); }  
+  </style>
+</head>
+<body>
+<v:line 
+from='200,200' 
+to='300,100' 
+style='position:absolute;z-index:8'> 
+</v:line> 
+</body>
+</html>
+
+<script>
+var R =function(){};
+R.prototype.createLine = function (startX,startY,endX,endY){ 
+  var le = document.createElement( "<v:line><v:line>" ); 
+  le.from = startX + ',' + startY ; 
+  le.to = endX + ',' + endY ; 
+  le.strokecolor= "red" ; 
+  le.strokeweight= "1pt" ; 
+  return le; 
+} 
+var d =new R();
+document.body.appendChild(d.createLine(1,1,200,100));
+</script>
+
+

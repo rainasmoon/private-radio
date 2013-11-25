@@ -1,0 +1,86 @@
+use level to control the depth of family.
+
+you can input relations information in map model.
+
+nice-to-have:
+use flash chart to polish the layout of family tree.
+control the event of mouse.
+
+use ajax to improve the user experience.
+
+
+the map model: 
+Node: Single; Marriage; Family.
+Level: 1-10
+Open/Close: open/close a node.
+
+
+冗余数据
+google地图
+关键人物
+level
+
+************************************************************
+JS
+************************************************************
+
+add parter
+add husband
+add wife
+add child
+
+存在一个数据结构，然后生成图。
+
+
+************************************************************
+IMPORTANT
+************************************************************
+
+
+
+1.0
+
+ajax is a must-have ability.
+
+how to show the family tree.
+
+ui
+
+getSibling()
+
+getSpouse()
+getHusband()
+getWife()
+
+getParent()
+getFather()
+getMother()
+
+getGrandPa()
+getGrandMa()
+
+getChildren()
+
+add more test.
+
+2 things: layout & how to input easy.
+
+3 input the datas
+
+4 ajax
+
+************************************************************
+*IMPORTANT
+************************************************************
+长度用auto. 然后计算长度。
+
+固定长度，因为名字最多五个字，一般三个字，用省略号和alt实现  
+
+
+************************************************************
+*REFERENCE
+************************************************************
+
+amcharts
+
+http://www.imapbuilder.com

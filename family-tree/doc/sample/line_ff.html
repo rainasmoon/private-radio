@@ -1,0 +1,47 @@
+
+
+<html>
+  <head>
+  <title>A canvas fillRect, strokeRect and clearRect example</title>
+  <meta name="DC.creator" content="Kamiel Martinet, http://www.martinet.nl/">
+  <meta name="DC.publisher" content="Mozilla Developer Center, http://developer.mozilla.org">
+  <script type="text/javascript">
+  function drawShape(){
+  // get the canvas element using the DOM
+  var canvas = document.getElementById('tutorial');
+
+  // Make sure we don't execute when canvas isn't supported
+
+  if (canvas.getContext){
+
+  // use getContext to use the canvas for drawing
+  var ctx = canvas.getContext('2d');
+
+  // Draw shapes
+  ctx.fillRect(25,25,100,100);
+  ctx.clearRect(45,45,60,60);
+  ctx.strokeRect(50,50,50,50);
+
+  ctx.beginPath();
+  ctx.moveTo(100,100);
+  ctx.lineTo(200,250);
+  ctx.lineTo(50,250);
+  ctx.closePath();
+  ctx.stroke();
+
+  } else {
+  alert('You need Safari or Firefox 1.5+ to see this demo.');
+  }
+  }
+  </script>
+  <style type="text/css">
+  </style>
+  </head>
+
+  <body onload="drawShape();">
+  <div>
+  <canvas id="tutorial" width="400" height="400"></canvas>
+  </div>
+  </body>
+
+</html>

@@ -1,0 +1,22 @@
+***STEP: INITIAL MY OWN DATA.
+
+***STEP: use table to display familytree?
+
+***STEP: DEPLOY TO INTERNET.
+
+***STEP: use OO to imply the structure of DATA
+
+***STEP: LEVEL & NODE 
+
+what's next?
+
+create a js function to display a family.
+type: family, marriage, person;
+given a family. then show it.
+
+service layer:
+conver a people, marriage, children data structure to Node.
+
+
+how to transfer json data from server to client.
+
