@@ -6,10 +6,9 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 
-import com.rainasmoon.privateradio.business.Play;
-import com.rainasmoon.privateradio.business.TtsHandler;
+import com.rainasmoon.privateradio.business.impl.TtsHandler;
 
-public class TextProgram  extends Program implements Play {
+public class TextProgram  implements  Program  {
 
 	private String article;
 	private TtsHandler ttsHandler;
@@ -20,14 +19,7 @@ public class TextProgram  extends Program implements Play {
 
 	@Override
 	public void play() {
-		ttsHandler = new TtsHandler();
 		
-		try {
-			ttsHandler.speakChineseTts(article);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 	}
 
@@ -40,6 +32,44 @@ public class TextProgram  extends Program implements Play {
 	@Override
 	public void stop() {
 		ttsHandler.stop();
+	}
+
+	@Override
+	public boolean isCompleted() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void getDuriation() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isText() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAudio() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isVedio() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public String getArticle() {
+		return article;
+	}
+
+	public void setArticle(String article) {
+		this.article = article;
 	}
 
 	

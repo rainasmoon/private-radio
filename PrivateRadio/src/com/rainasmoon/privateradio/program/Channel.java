@@ -2,8 +2,12 @@ package com.rainasmoon.privateradio.program;
 
 import java.util.List;
 
-public class Channel {
 
-	private String channelName;
-	private List<Program> programMenu;
+public interface Channel {
+
+	public String getChannelName();
+	public List<Program> listProgramMenu();
+	
+	
+	public void generateProgramSchedule();
 }

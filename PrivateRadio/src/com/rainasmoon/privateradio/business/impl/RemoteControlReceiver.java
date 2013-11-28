@@ -1,4 +1,4 @@
-package com.rainasmoon.privateradio.business;
+package com.rainasmoon.privateradio.business.impl;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

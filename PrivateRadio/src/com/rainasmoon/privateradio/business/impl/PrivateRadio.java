@@ -1,7 +1,8 @@
-package com.rainasmoon.privateradio.business;
+package com.rainasmoon.privateradio.business.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
@@ -10,11 +11,14 @@ import org.json.JSONException;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Button;
 
 import com.rainasmoon.privateradio.R;
+import com.rainasmoon.privateradio.business.MagicRadio;
+import com.rainasmoon.privateradio.business.PlayHandlerImpl;
 import com.rainasmoon.privateradio.program.AudioProgram;
 import com.rainasmoon.privateradio.program.Program;
 import com.rainasmoon.privateradio.program.TextProgram;
@@ -30,9 +34,10 @@ import com.rainasmoon.privateradio.utils.Utils;
 public class PrivateRadio implements MagicRadio {
 
 	enum Channel {
-		SELECT_LOCAL_MEDIA(1, "Picker Media"), INTERNET_MEDIA(
-				2, "Internet Song"), RSS(3, "RSS"), POCKET(4, "Pocket"), WEIBO(
-				5, "Weibo"), LOCAL_MEDIA(6, "Local Media"), LOCAL_FOLDER(0, "Local Folder");
+		SELECT_LOCAL_MEDIA(1, "Picker Media"), INTERNET_MEDIA(2,
+				"Internet Song"), RSS(3, "RSS"), POCKET(4, "Pocket"), WEIBO(5,
+				"Weibo"), LOCAL_MEDIA(6, "Local Media"), LOCAL_FOLDER(0,
+				"Local Folder");
 
 		private int channelId;
 		private String channelName;
@@ -41,7 +46,7 @@ public class PrivateRadio implements MagicRadio {
 			channelId = id;
 			channelName = name;
 		}
-		
+
 		@Override
 		public String toString() {
 			return channelName;
@@ -70,7 +75,7 @@ public class PrivateRadio implements MagicRadio {
 		}
 
 		public Channel nextChannel() {
-			if (channelId == Channel.values().length -1) {
+			if (channelId == Channel.values().length - 1) {
 				return LOCAL_MEDIA;
 			}
 			return getChannel(channelId + 1);
@@ -79,62 +84,105 @@ public class PrivateRadio implements MagicRadio {
 
 	private Channel currentChannel = Channel.LOCAL_FOLDER;
 	private Program program;
+	private PlayHandlerImpl handler;
 
 	@Override
 	public void play() {
+
+//		switch (currentChannel) {
+//		case LOCAL_MEDIA:
+//			playLocalMedia();
+//			break;
+//		case SELECT_LOCAL_MEDIA:
+//			playSelectLocalMedia();
+//			break;
+//		case INTERNET_MEDIA:
+//			playInternetMedia();
+//			break;
+//		case RSS:
+//			playRssMedia();
+//			break;
+//		case POCKET:
+//			playPocket();
+//			break;
+//		case WEIBO:
+//			playWeibo();
+//			break;
+//		case LOCAL_FOLDER:
+//			playLocalFolfer();
+//			break;
+//		default:
+//			break;
+//
+//		}
+
+//		 sayHelloToEveryOne();
+
+//		 testTtsMedia();//works!
+		 
+//		 playBanchOfText();
+
+		playLocalFolder();
 		
-		
-
-		switch (currentChannel) {
-		case LOCAL_MEDIA:
-			playLocalMedia();
-			break;
-		case SELECT_LOCAL_MEDIA:
-			playSelectLocalMedia();
-			break;
-		case INTERNET_MEDIA:
-			playInternetMedia();
-			break;
-		case RSS:
-			playRssMedia();
-			break;
-		case POCKET:
-			playPocket();
-			break;
-		case WEIBO:
-			playWeibo();
-			break;
-		case LOCAL_FOLDER:
-			playLocalFolfer();
-			break;
-		default:
-			break;
-
-		}
-
-		// sayHelloToEveryOne();
-
-		// testTtsMedia();//works!
-
 		Button startButton = (Button) Utils.activity
 				.findViewById(R.id.start_radio);
 		startButton.setText(currentChannel.toString() + " is playing...");
 
 	}
+	
 
-	private void playLocalFolfer() {
-		
+
+	private void playLocalFolder() {
+
 		File folder = new File("/storage/sdcard0/ttpod/song");
 		Utils.log.info("the folder is:" + folder);
-		for (File f : folder.listFiles()) {
-			program = new AudioProgram(f);
-			program.play();
-		}
-			
+		// Channel musicChannel = new Channel();
+		List<Program> programs = new ArrayList<Program>();
 		
+		programs.add(new TextProgram("问我爱你有多深，私人定制电台代表我的心。欢迎来到这高端大气上当了的个人电台播报软件。"));
+		
+		programs.add(new TextProgram("这是第一个节目。"));
+		programs.add(new TextProgram("这是第二个节目。"));
+		programs.add(new TextProgram("这是第三个节目。"));
+	
+		
+//		programs.addAll(playRssMedia());
+//		programs.addAll(playPocket());
+//		programs.addAll(playWeibo());
+		
+		for (File f : folder.listFiles()) {
+			if (f.isFile() && f.getName().endsWith(".mp3")) {
+				programs.add(new AudioProgram(f));
+			}
+		}
+
+		programs.add(new TextProgram(
+				" 《伊萨卡岛》（希）卡瓦菲斯     当你启程前往伊萨卡，但愿你的道路漫长，充满奇迹，充满发现。莱斯特律戈涅斯巨人，独眼巨人，愤怒的波塞冬海神——不要怕他们：你将不会在途中碰到诸如此类的怪物，只要你高扬你的思想，只要有一种特殊的感觉，接触你的精神和肉体。莱斯特律戈涅斯巨人，独眼巨人，野蛮的波塞冬海神——你将不会跟他们遭遇，除非你将他们一直带进你的灵魂，除非你的灵魂将他们树立在你的面前。但愿你的道路漫长。但愿那里有很多夏天的早晨，当你无比快乐和兴奋地进入你第一次见到的海港：但愿你在腓尼基人的贸易市场停步，购买精美的物件，珍珠母和珊瑚，琥珀和黑檀，各式各样销魂的香水——你要多销魂就有多销魂。愿你走访众多埃及城市，向那些有识之士讨教并继续讨教。 让伊萨卡常在你心中，抵达那里是你此行的目的。但路上不要过于匆促，最好多延长几年，那时当你上得了岛你也就老了，一路所得已经教你富甲四方，用不着伊萨卡来让你财源滚滚。用伊萨卡赋予你如此神奇的旅行，没有它你可不会启程前来。现在它再也没有什么可以给你的了。而如果你发现它原来是这么穷，那可不是伊萨卡想愚弄你。既然那时你已经变得很聪慧，并且见多识广，你也就不会不明白，这伊萨卡意味着什么。"));
+		handler = new PlayHandlerImpl();
+
+		try {
+
+			handler.playList(programs);
+
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
-	
+
 	private void playInternetMedia() {
 
 		try {
@@ -170,33 +218,21 @@ public class PrivateRadio implements MagicRadio {
 
 	}
 
-	private void testTtsMedia() {
-		program = new TextProgram(
-				" 《伊萨卡岛》（希）卡瓦菲斯     当你启程前往伊萨卡，但愿你的道路漫长，充满奇迹，充满发现。莱斯特律戈涅斯巨人，独眼巨人，愤怒的波塞冬海神——不要怕他们：你将不会在途中碰到诸如此类的怪物，只要你高扬你的思想，只要有一种特殊的感觉，接触你的精神和肉体。莱斯特律戈涅斯巨人，独眼巨人，野蛮的波塞冬海神——你将不会跟他们遭遇，除非你将他们一直带进你的灵魂，除非你的灵魂将他们树立在你的面前。但愿你的道路漫长。但愿那里有很多夏天的早晨，当你无比快乐和兴奋地进入你第一次见到的海港：但愿你在腓尼基人的贸易市场停步，购买精美的物件，珍珠母和珊瑚，琥珀和黑檀，各式各样销魂的香水——你要多销魂就有多销魂。愿你走访众多埃及城市，向那些有识之士讨教并继续讨教。 让伊萨卡常在你心中，抵达那里是你此行的目的。但路上不要过于匆促，最好多延长几年，那时当你上得了岛你也就老了，一路所得已经教你富甲四方，用不着伊萨卡来让你财源滚滚。用伊萨卡赋予你如此神奇的旅行，没有它你可不会启程前来。现在它再也没有什么可以给你的了。而如果你发现它原来是这么穷，那可不是伊萨卡想愚弄你。既然那时你已经变得很聪慧，并且见多识广，你也就不会不明白，这伊萨卡意味着什么。");
-		program.play();
-	}
 
-	private void sayHelloToEveryOne() {
-		program = new TextProgram(
-				"问我爱你有多深，私人定制电台代表我的心。欢迎来到这高端大气上当了的个人电台播报软件。");
-		program.play();
-	}
+	private List<Program> playRssMedia() {
 
-	private void playRssMedia() {
-				
+		List<Program> l = new ArrayList<Program> ();
+		
 		final RssHandler rssHandler = new RssHandler();
-				
+
 		List<String> msgList = rssHandler.getText();
-		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < msgList.size(); i++) {
 			String say = msgList.get(i);
 			Utils.log.info("msg:" + say);
-			sb.append(say);
+			l.add(new TextProgram(say));
 		}
-		
-		program = new TextProgram(sb.toString());
-		program.play();
 
+		return l;
 	}
 
 	private void playLocalMedia() {
@@ -208,33 +244,33 @@ public class PrivateRadio implements MagicRadio {
 		program.play();
 	}
 
-	private void playPocket() {
+	private List<Program> playPocket() {
+
+		List<Program> l = new ArrayList<Program> ();
+		
 		PocketHandler pocketHandler = new PocketHandler();
 		List<String> msgList = pocketHandler.retrivePocketList();
-		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < msgList.size(); i++) {
 			String say = msgList.get(i);
 			Utils.log.info("msg:" + say);
-			sb.append(say);
+			l.add(new TextProgram(say));
 		}
-		
-		program = new TextProgram(sb.toString());
-		program.play();
+
+		return l;
 	}
 
-	private void playWeibo() {
-		WeiboHandler weiboHandler = new WeiboHandler();		
-		List<String> msgList = weiboHandler.retriveWeiboList();
+	private List<Program> playWeibo() {
+		List<Program> l = new ArrayList<Program> ();
 		
-		StringBuffer sb = new StringBuffer();
+		WeiboHandler weiboHandler = new WeiboHandler();
+		List<String> msgList = weiboHandler.retriveWeiboList();
+
 		for (int i = 0; i < msgList.size(); i++) {
 			String say = msgList.get(i);
 			Utils.log.info("msg:" + say);
-			sb.append(say);
+			l.add(new TextProgram(say));
 		}
-		
-		program = new TextProgram(sb.toString());
-		program.play();
+		return l;
 	}
 
 	@Override
@@ -268,9 +304,16 @@ public class PrivateRadio implements MagicRadio {
 	}
 
 	@Override
-	public void generateProgramSchedule() {
+	public void ListAllChannels() {
 		// TODO Auto-generated method stub
 
+	}
+
+
+
+	public void next() {
+		handler.next();
+		
 	}
 
 }

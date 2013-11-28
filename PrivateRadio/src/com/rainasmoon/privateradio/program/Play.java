@@ -1,4 +1,4 @@
-package com.rainasmoon.privateradio.business;
+package com.rainasmoon.privateradio.program;
 
 public interface Play {
 

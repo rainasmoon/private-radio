@@ -1,8 +1,8 @@
 package com.rainasmoon.privateradio.program;
 
-import com.rainasmoon.privateradio.business.Play;
 
-public class VedioProgram  extends Program implements Play {
+
+public class VedioProgram   implements Program {
 
 	@Override
 	public void play() {
@@ -14,6 +14,42 @@ public class VedioProgram  extends Program implements Play {
 	public void getDuration() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isCompleted() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void getDuriation() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isText() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAudio() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isVedio() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

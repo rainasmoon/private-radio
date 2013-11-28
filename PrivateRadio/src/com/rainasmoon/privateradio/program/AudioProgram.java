@@ -8,11 +8,10 @@ import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.net.Uri;
 
-import com.rainasmoon.privateradio.business.MediaPlayHandler;
-import com.rainasmoon.privateradio.business.Play;
+import com.rainasmoon.privateradio.business.impl.MediaPlayHandler;
 import com.rainasmoon.privateradio.utils.Utils;
 
-public class AudioProgram extends Program implements Play {
+public class AudioProgram implements Program  {
 
 	private long id;
 	private Uri uri;
@@ -34,42 +33,73 @@ public class AudioProgram extends Program implements Play {
 	public void play() {
 		
 		
-		final MediaPlayHandler handler = new MediaPlayHandler();
 		
-		
-		try {
-			if (id != 0) {
-				handler.playBanchOfLocalMedia(id);
-			}
-			if (uri != null) {
-				handler.playUriSong(uri);
-			}
-			if (file != null) {
-				Uri u = Uri.fromFile(file);
-				handler.playUriSong(u);
-			}
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Override
 	public void getDuration() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isCompleted() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Uri getUri() {
+		return uri;
+	}
+
+	public void setUri(Uri uri) {
+		this.uri = uri;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	@Override
+	public void getDuriation() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isText() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAudio() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isVedio() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

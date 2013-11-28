@@ -1,13 +1,17 @@
 package com.rainasmoon.privateradio.program;
 
-import com.rainasmoon.privateradio.business.Play;
 import com.rainasmoon.privateradio.utils.Utils;
 
-public abstract class Program implements Play {
+public interface Program extends Play {
 
-	public void stop() {
-		
-		Utils.log.info("Program stop is runn...");
-	}
-
+	
+	public void play();
+	public void stop();
+	public boolean isCompleted();
+	
+	public void getDuriation();
+	
+	public boolean isText();
+	public boolean isAudio();
+	public boolean isVedio();
 }

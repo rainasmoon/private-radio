@@ -10,6 +10,7 @@ public interface MagicRadio {
 	public void preChannel();
 	//i prefer to create the MagicRadio as simple as possible.
 	//the other things the program will take care.
-	public void generateProgramSchedule();
+
+	public void ListAllChannels();
 	
 }

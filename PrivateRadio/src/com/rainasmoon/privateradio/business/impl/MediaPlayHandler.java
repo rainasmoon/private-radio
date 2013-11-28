@@ -1,7 +1,11 @@
-package com.rainasmoon.privateradio.business;
+package com.rainasmoon.privateradio.business.impl;
 
 import java.io.IOException;
+import java.util.List;
 
+import com.rainasmoon.privateradio.business.PlayHandlerImpl;
+import com.rainasmoon.privateradio.program.AudioProgram;
+import com.rainasmoon.privateradio.program.Program;
 import com.rainasmoon.privateradio.utils.Utils;
 
 import android.content.ContentUris;
@@ -9,6 +13,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.AudioManager.OnAudioFocusChangeListener;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.PowerManager;
 import android.view.View;
@@ -17,17 +22,16 @@ public class MediaPlayHandler {
 
 	private MediaPlayer mediaPlayer;
 	private Context context;
+	private PlayHandlerImpl playHandlerImpl;
+	
 
-	public MediaPlayHandler(Context context) {
-		this.context = context;
 
+	public MediaPlayHandler(PlayHandlerImpl playHandlerImpl) {
+		context = Utils.context;
+		this.playHandlerImpl = playHandlerImpl;
 	}
 
-	public MediaPlayHandler() {
-		this(Utils.context);
-	}
-
-	public void init() throws Exception {
+	public void init() {
 
 		AudioManager audioManager = (AudioManager) Utils.activity
 				.getSystemService(Context.AUDIO_SERVICE);
@@ -45,7 +49,7 @@ public class MediaPlayHandler {
 				AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 
 		if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-			throw new Exception("can't get Audio Focus.");
+			throw new RuntimeException("can't get Audio Focus.");
 		}
 
 		mediaPlayer = new MediaPlayer();
@@ -62,6 +66,14 @@ public class MediaPlayHandler {
 				return false;
 			}
 
+		});
+		mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+			
+			@Override
+			public void onCompletion(MediaPlayer mp) {
+				playHandlerImpl.next();
+				
+			}
 		});
 	}
 
@@ -107,45 +119,31 @@ public class MediaPlayHandler {
 		mediaPlayer.setDataSource(url);
 	}
 
-	public void playBanchOfLocalMedia(long id) throws Exception {
-		init();
-		setSource(id);
-		start();
-	}
+//	public void playBanchOfLocalMedia(long id) throws Exception {
+//		init();
+//		setSource(id);
+//		start();
+//	}
 
-	public void playOneLocalSong() {
-		try {
-			getLocalMedia();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public void getLocalMedia() throws Exception {
-		Uri myUri = Uri.parse("content://media/external/audio/media/113685"); // initialize
-		init();
-		setSource(myUri);
-		start();
-	}
 
 	public void playUriSong(Uri uri) throws Exception {
 
-		init();
+		if (mediaPlayer == null) {
+			init();
+		}
+		else {
+			mediaPlayer.reset();
+		}
+		
 		setSource(uri);
 		start();
 	}
+
+	public void reset() {
+		mediaPlayer.reset();
+		
+	}
+
+	
 
 }

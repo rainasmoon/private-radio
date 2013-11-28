@@ -2,7 +2,7 @@ package com.rainasmoon.privateradio.sourcechanel.interneturl;
 
 import java.io.IOException;
 
-import com.rainasmoon.privateradio.business.MediaPlayHandler;
+import com.rainasmoon.privateradio.business.impl.MediaPlayHandler;
 import com.rainasmoon.privateradio.utils.Utils;
 
 import android.content.Context;
@@ -21,10 +21,10 @@ public class InternetResouceHandler {
 			    .createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
 
 			wifiLock.acquire();																		// here
-		MediaPlayHandler mph = new MediaPlayHandler();
-		mph.init();
-		mph.setSource(url2);
-		mph.start();
+//		MediaPlayHandler mph = new MediaPlayHandler();
+//		mph.init();
+//		mph.setSource(url2);
+//		mph.start();
 		
 		wifiLock.release();
 	}
