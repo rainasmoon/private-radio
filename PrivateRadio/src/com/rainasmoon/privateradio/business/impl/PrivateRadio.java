@@ -85,42 +85,12 @@ public class PrivateRadio implements MagicRadio {
 	private Channel currentChannel = Channel.LOCAL_FOLDER;
 	private Program program;
 	private PlayHandlerImpl handler;
+	private ArrayList<Program> programs;
+	private int subChannel;
 
 	@Override
 	public void play() {
 
-//		switch (currentChannel) {
-//		case LOCAL_MEDIA:
-//			playLocalMedia();
-//			break;
-//		case SELECT_LOCAL_MEDIA:
-//			playSelectLocalMedia();
-//			break;
-//		case INTERNET_MEDIA:
-//			playInternetMedia();
-//			break;
-//		case RSS:
-//			playRssMedia();
-//			break;
-//		case POCKET:
-//			playPocket();
-//			break;
-//		case WEIBO:
-//			playWeibo();
-//			break;
-//		case LOCAL_FOLDER:
-//			playLocalFolfer();
-//			break;
-//		default:
-//			break;
-//
-//		}
-
-//		 sayHelloToEveryOne();
-
-//		 testTtsMedia();//works!
-		 
-//		 playBanchOfText();
 
 		playLocalFolder();
 		
@@ -134,31 +104,19 @@ public class PrivateRadio implements MagicRadio {
 
 	private void playLocalFolder() {
 
-		File folder = new File("/storage/sdcard0/ttpod/song");
-		Utils.log.info("the folder is:" + folder);
+		
+		
 		// Channel musicChannel = new Channel();
-		List<Program> programs = new ArrayList<Program>();
+        programs = new ArrayList<Program>();
 		
 		programs.add(new TextProgram("问我爱你有多深，私人定制电台代表我的心。欢迎来到这高端大气上当了的个人电台播报软件。"));
-		
-		programs.add(new TextProgram("这是第一个节目。"));
-		programs.add(new TextProgram("这是第二个节目。"));
-		programs.add(new TextProgram("这是第三个节目。"));
-	
-		
-//		programs.addAll(playRssMedia());
-//		programs.addAll(playPocket());
-//		programs.addAll(playWeibo());
-		
-		for (File f : folder.listFiles()) {
-			if (f.isFile() && f.getName().endsWith(".mp3")) {
-				programs.add(new AudioProgram(f));
-			}
-		}
+
+		playLocalMediaFolder();
+
 
 		programs.add(new TextProgram(
 				" 《伊萨卡岛》（希）卡瓦菲斯     当你启程前往伊萨卡，但愿你的道路漫长，充满奇迹，充满发现。莱斯特律戈涅斯巨人，独眼巨人，愤怒的波塞冬海神——不要怕他们：你将不会在途中碰到诸如此类的怪物，只要你高扬你的思想，只要有一种特殊的感觉，接触你的精神和肉体。莱斯特律戈涅斯巨人，独眼巨人，野蛮的波塞冬海神——你将不会跟他们遭遇，除非你将他们一直带进你的灵魂，除非你的灵魂将他们树立在你的面前。但愿你的道路漫长。但愿那里有很多夏天的早晨，当你无比快乐和兴奋地进入你第一次见到的海港：但愿你在腓尼基人的贸易市场停步，购买精美的物件，珍珠母和珊瑚，琥珀和黑檀，各式各样销魂的香水——你要多销魂就有多销魂。愿你走访众多埃及城市，向那些有识之士讨教并继续讨教。 让伊萨卡常在你心中，抵达那里是你此行的目的。但路上不要过于匆促，最好多延长几年，那时当你上得了岛你也就老了，一路所得已经教你富甲四方，用不着伊萨卡来让你财源滚滚。用伊萨卡赋予你如此神奇的旅行，没有它你可不会启程前来。现在它再也没有什么可以给你的了。而如果你发现它原来是这么穷，那可不是伊萨卡想愚弄你。既然那时你已经变得很聪慧，并且见多识广，你也就不会不明白，这伊萨卡意味着什么。"));
-		handler = new PlayHandlerImpl();
+		handler = new PlayHandlerImpl(this);
 
 		try {
 
@@ -181,6 +139,28 @@ public class PrivateRadio implements MagicRadio {
 			e.printStackTrace();
 		}
 
+	}
+	
+	private void playLocalMediaFolder() {
+		for (String s : com.rainasmoon.privateradio.sourcechanel.localmedia.Constants.LOCAL_FOLDERS) {
+			Utils.log.info("the folder is:" + s);
+			File folder = new File(s);
+			addFile(folder);
+		}
+		
+		
+	}
+	
+	private void addFile(File folder) {
+		for (File f : folder.listFiles()) {
+			if (f.isFile()) {
+				if (f.getName().endsWith(".mp3")) {
+					programs.add(new AudioProgram(f));
+				}
+			}else {
+				addFile(f);
+			}
+		}
 	}
 
 	private void playInternetMedia() {
@@ -219,13 +199,13 @@ public class PrivateRadio implements MagicRadio {
 	}
 
 
-	private List<Program> playRssMedia() {
+	private List<Program> playRssMedia(String rssUrl) {
 
 		List<Program> l = new ArrayList<Program> ();
 		
 		final RssHandler rssHandler = new RssHandler();
 
-		List<String> msgList = rssHandler.getText();
+		List<String> msgList = rssHandler.getText(rssUrl);
 		for (int i = 0; i < msgList.size(); i++) {
 			String say = msgList.get(i);
 			Utils.log.info("msg:" + say);
@@ -292,9 +272,16 @@ public class PrivateRadio implements MagicRadio {
 	}
 
 	@Override
-	public void nextChannel() {
-		program.stop();
+	public void nextChannel() {	
+		if (currentChannel == Channel.RSS) {
+			subChannel++;
+			if (subChannel <  com.rainasmoon.privateradio.sourcechanel.rss.Constants.rss_list.length) {
+				return;
+			}
+		} 	
 		currentChannel = currentChannel.nextChannel();
+		
+		
 	}
 
 	@Override
@@ -313,6 +300,68 @@ public class PrivateRadio implements MagicRadio {
 
 	public void next() {
 		handler.next();
+		
+	}
+
+
+
+	public void loadMoreContent() {
+
+		nextChannel();
+		
+		Utils.log.info("nextChannel:" + currentChannel);
+		
+		switch (currentChannel) {
+		case LOCAL_MEDIA:
+			playLocalMedia();
+			break;
+		case SELECT_LOCAL_MEDIA:
+//			playSelectLocalMedia();
+			break;
+		case INTERNET_MEDIA:
+//			playInternetMedia();
+			break;
+		case RSS:
+		{
+			new Thread() {
+				@Override
+				public void run() {
+					programs.addAll(playRssMedia(com.rainasmoon.privateradio.sourcechanel.rss.Constants.rss_list[subChannel]));
+				}
+				
+			}.start();
+		}
+			break;
+		case POCKET:
+			{
+				new Thread() {
+					@Override
+					public void run() {
+						programs.addAll(playPocket());
+					}
+					
+				}.start();
+			}
+			break;
+		case WEIBO:
+		{
+			new Thread() {
+				@Override
+				public void run() {
+					programs.addAll(playWeibo());
+				}
+				
+			}.start();
+		}
+			break;
+		case LOCAL_FOLDER:
+//			playLocalFolfer();
+			break;
+		default:
+			break;
+
+		}
+
 		
 	}
 

@@ -11,6 +11,7 @@ import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.widget.Toast;
 
 import com.rainasmoon.privateradio.business.impl.MediaPlayHandler;
+import com.rainasmoon.privateradio.business.impl.PrivateRadio;
 import com.rainasmoon.privateradio.business.impl.TtsHandler;
 import com.rainasmoon.privateradio.program.AudioProgram;
 import com.rainasmoon.privateradio.program.Program;
@@ -21,10 +22,16 @@ public class PlayHandlerImpl implements PlayHandler {
 
 	TtsHandler ttsHandler = new TtsHandler(this);
 	MediaPlayHandler mediaPlayHandler = new MediaPlayHandler(this);
+	
+	PrivateRadio radio;
 
 	private List<Program> programs;
 	private int currentProgram;
 
+	public PlayHandlerImpl(PrivateRadio radio) {
+		this.radio = radio;
+	}
+	
 	@Override
 	public boolean isLiveNow() {
 		// TODO Auto-generated method stub
@@ -67,6 +74,8 @@ public class PlayHandlerImpl implements PlayHandler {
 	public void next() {
 		currentProgram++;
 
+		
+		
 		if (currentProgram < programs.size()) {
 			Program p = (Program) programs.get(currentProgram);
 			if (p.isAudio()) {
@@ -81,6 +90,15 @@ public class PlayHandlerImpl implements PlayHandler {
 
 				ttsHandler.speak(((TextProgram) p).getArticle());
 			}
+		}
+		else {
+			//here need to load more contents...
+			
+			
+		}
+		
+		if (currentProgram > programs.size() - 3) {
+			radio.loadMoreContent();
 		}
 	}
 

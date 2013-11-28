@@ -16,11 +16,11 @@ public class RssHandler extends Constants{
 
 	java.util.logging.Logger log = java.util.logging.Logger.getLogger("wh:");
 
-	public List<String> getText() {
+	public List<String> getText(String rssUrl) {
 		
 		List<String> l = new ArrayList<String>();
 				
-		RSSFeed rsss = getFeed(RSS_163_TOP_NEWS);
+		RSSFeed rsss = getFeed(rssUrl);
 
 		if (rsss != null) {
 

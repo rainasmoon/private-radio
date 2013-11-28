@@ -8,4 +8,8 @@ public abstract class Constants {
 	
 	public static Uri MY_PICK_SONG_URI;
 	
+	public static String [] LOCAL_FOLDERS = new String[] {
+		"/storage/sdcard0/ttpod/song", "/storage/sdcard0/BeyondPod/Podcasts"
+	};
+	
 }
