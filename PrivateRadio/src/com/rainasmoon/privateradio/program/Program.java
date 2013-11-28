@@ -14,4 +14,6 @@ public interface Program extends Play {
 	public boolean isText();
 	public boolean isAudio();
 	public boolean isVedio();
+	
+	public String getDescription();
 }

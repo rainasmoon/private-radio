@@ -119,11 +119,17 @@ public class MediaPlayHandler {
 		mediaPlayer.setDataSource(url);
 	}
 
-//	public void playBanchOfLocalMedia(long id) throws Exception {
-//		init();
-//		setSource(id);
-//		start();
-//	}
+	public void playBanchOfLocalMedia(long id) throws Exception {
+		if (mediaPlayer == null) {
+			init();
+		}
+		else {
+			mediaPlayer.reset();
+		}
+		
+		setSource(id);
+		start();
+	}
 
 
 	public void playUriSong(Uri uri) throws Exception {

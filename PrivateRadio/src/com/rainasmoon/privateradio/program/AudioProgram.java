@@ -13,11 +13,11 @@ import com.rainasmoon.privateradio.utils.Utils;
 
 public class AudioProgram implements Program  {
 
-	private long id;
+	private Long id;
 	private Uri uri;
 	private File file;
 	
-	public AudioProgram(long id) {
+	public AudioProgram(Long id) {
 		this.id = id;
 	}
 	
@@ -54,11 +54,11 @@ public class AudioProgram implements Program  {
 		return false;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -100,6 +100,17 @@ public class AudioProgram implements Program  {
 	public boolean isVedio() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public String getDescription() {
+		if (file != null) {
+			return file.getName();
+		}
+		if (id != null) {
+			return id.toString();
+		}
+		return null;
 	}
 
 }

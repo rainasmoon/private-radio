@@ -52,4 +52,10 @@ public class VedioProgram   implements Program {
 		return false;
 	}
 
+	@Override
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

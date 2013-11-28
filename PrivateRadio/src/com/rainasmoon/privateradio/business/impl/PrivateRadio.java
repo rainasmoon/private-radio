@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.rainasmoon.privateradio.R;
 import com.rainasmoon.privateradio.business.MagicRadio;
@@ -148,7 +149,9 @@ public class PrivateRadio implements MagicRadio {
 			addFile(folder);
 		}
 		
-		
+		if (programs.size() < 5) {
+			
+		}
 	}
 	
 	private void addFile(File folder) {
@@ -215,13 +218,14 @@ public class PrivateRadio implements MagicRadio {
 		return l;
 	}
 
-	private void playLocalMedia() {
+	private void addAllLocalMedia() {
 		LocalMediaHandler localMediaHandler = new LocalMediaHandler();
-		long id = localMediaHandler.getBanchOfLocalMedia();
+		List<Long> list = localMediaHandler.getBanchOfLocalMedia();
 
-		program = new AudioProgram(id);
+		for(Long id : list) {
+			programs.add(new AudioProgram(id));
+		}
 
-		program.play();
 	}
 
 	private List<Program> playPocket() {
@@ -311,9 +315,13 @@ public class PrivateRadio implements MagicRadio {
 		
 		Utils.log.info("nextChannel:" + currentChannel);
 		
+		Toast.makeText(Utils.context,
+				"正在加载更多内容：" + currentChannel, Toast.LENGTH_SHORT)
+				.show();
+		
 		switch (currentChannel) {
 		case LOCAL_MEDIA:
-			playLocalMedia();
+			addAllLocalMedia();
 			break;
 		case SELECT_LOCAL_MEDIA:
 //			playSelectLocalMedia();

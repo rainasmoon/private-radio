@@ -105,12 +105,20 @@ public class MainActivity extends Activity implements TextToSpeech.OnUtteranceCo
 
 		Log.i(TAG, "stop...");
 		radio.stop();
+		
+		Toast.makeText(getApplicationContext(),
+				"功能还在开发中哦...亲", Toast.LENGTH_SHORT)
+				.show();
 
 	}
 
 	public void likeIt(View view) {
 
 		Log.i(TAG, "likt it...");
+		
+		Toast.makeText(getApplicationContext(),
+				"功能还在开发中哦...亲", Toast.LENGTH_SHORT)
+				.show();
 
 	}
 

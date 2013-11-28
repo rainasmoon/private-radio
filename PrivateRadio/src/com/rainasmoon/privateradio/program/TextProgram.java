@@ -10,6 +10,8 @@ import com.rainasmoon.privateradio.business.impl.TtsHandler;
 
 public class TextProgram  implements  Program  {
 
+	private String description;
+	
 	private String article;
 	private TtsHandler ttsHandler;
 	
@@ -70,6 +72,14 @@ public class TextProgram  implements  Program  {
 
 	public void setArticle(String article) {
 		this.article = article;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	

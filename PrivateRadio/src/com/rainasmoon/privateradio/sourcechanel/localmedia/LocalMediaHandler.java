@@ -1,6 +1,8 @@
 package com.rainasmoon.privateradio.sourcechanel.localmedia;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.rainasmoon.privateradio.business.impl.MediaPlayHandler;
 import com.rainasmoon.privateradio.utils.Utils;
@@ -24,8 +26,10 @@ public class LocalMediaHandler {
 		this(Utils.contentResolver);
 	}
 
-	public long getBanchOfLocalMedia() {
+	public List<Long> getBanchOfLocalMedia() {
 
+		List<Long>  l = new ArrayList<Long>();
+		
 		Uri uri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
 		log.info("uri: " + uri);
 
@@ -47,11 +51,11 @@ public class LocalMediaHandler {
 				// ...process entry...
 				log.info("play: " + thisTitle);
 				
-					return thisId;
+				l.add(thisId);
 				
 				
 			} while (cursor.moveToNext());
 		}
-		return 0;
+		return l;
 	}
 }

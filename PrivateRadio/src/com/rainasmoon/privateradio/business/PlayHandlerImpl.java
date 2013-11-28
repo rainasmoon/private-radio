@@ -78,6 +78,9 @@ public class PlayHandlerImpl implements PlayHandler {
 		
 		if (currentProgram < programs.size()) {
 			Program p = (Program) programs.get(currentProgram);
+			Toast.makeText(Utils.context,
+					"正在播放：" + p.getDescription(), Toast.LENGTH_SHORT)
+					.show();
 			if (p.isAudio()) {
 				Uri u = Uri.fromFile(((AudioProgram) p).getFile());
 				try {
@@ -100,6 +103,8 @@ public class PlayHandlerImpl implements PlayHandler {
 		if (currentProgram > programs.size() - 3) {
 			radio.loadMoreContent();
 		}
+		
+		
 	}
 
 	public void playList(List<Program> programs) throws Exception {
@@ -108,8 +113,13 @@ public class PlayHandlerImpl implements PlayHandler {
 		Program p = (Program) programs.get(currentProgram);
 		if (p.isAudio()) {
 
-			Uri u = Uri.fromFile(((AudioProgram) p).getFile());
-			mediaPlayHandler.playUriSong(u);
+			if (((AudioProgram) p).getFile() != null) {
+				Uri u = Uri.fromFile(((AudioProgram) p).getFile());
+				mediaPlayHandler.playUriSong(u);
+			}
+			else if (((AudioProgram) p).getId() != null) {
+				mediaPlayHandler.playBanchOfLocalMedia(((AudioProgram) p).getId());
+			}
 		} else if (p.isText()) {
 
 			try {
