@@ -82,13 +82,7 @@ public class PlayHandlerImpl implements PlayHandler {
 					"正在播放：" + p.getDescription(), Toast.LENGTH_SHORT)
 					.show();
 			if (p.isAudio()) {
-				Uri u = Uri.fromFile(((AudioProgram) p).getFile());
-				try {
-					mediaPlayHandler.playUriSong(u);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				mediaPlayHandler.playProgram(p);
 			} else if (p.isText()) {
 
 				ttsHandler.speak(((TextProgram) p).getArticle());
@@ -113,13 +107,7 @@ public class PlayHandlerImpl implements PlayHandler {
 		Program p = (Program) programs.get(currentProgram);
 		if (p.isAudio()) {
 
-			if (((AudioProgram) p).getFile() != null) {
-				Uri u = Uri.fromFile(((AudioProgram) p).getFile());
-				mediaPlayHandler.playUriSong(u);
-			}
-			else if (((AudioProgram) p).getId() != null) {
-				mediaPlayHandler.playBanchOfLocalMedia(((AudioProgram) p).getId());
-			}
+			mediaPlayHandler.playProgram(p);
 		} else if (p.isText()) {
 
 			try {

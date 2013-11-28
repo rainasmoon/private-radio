@@ -150,7 +150,7 @@ public class PrivateRadio implements MagicRadio {
 		}
 		
 		if (programs.size() < 5) {
-			
+			addAllLocalMedia();
 		}
 	}
 	
@@ -170,7 +170,10 @@ public class PrivateRadio implements MagicRadio {
 
 		try {
 			InternetResouceHandler handler = new InternetResouceHandler();
-			handler.getInternetMedia();
+			List<String> l = handler.getInternetMedia();
+			for(String url : l) {
+				programs.add(new AudioProgram(url));
+			}
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -327,7 +330,7 @@ public class PrivateRadio implements MagicRadio {
 //			playSelectLocalMedia();
 			break;
 		case INTERNET_MEDIA:
-//			playInternetMedia();
+			playInternetMedia();
 			break;
 		case RSS:
 		{

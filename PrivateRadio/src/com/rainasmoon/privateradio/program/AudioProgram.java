@@ -16,6 +16,7 @@ public class AudioProgram implements Program  {
 	private Long id;
 	private Uri uri;
 	private File file;
+	private String url;
 	
 	public AudioProgram(Long id) {
 		this.id = id;
@@ -27,6 +28,10 @@ public class AudioProgram implements Program  {
 	
 	public AudioProgram(File f) {
 		file = f;
+	}
+	
+	public AudioProgram(String url) {
+		this.url = url;
 	}
 
 	@Override
@@ -111,6 +116,14 @@ public class AudioProgram implements Program  {
 			return id.toString();
 		}
 		return null;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }

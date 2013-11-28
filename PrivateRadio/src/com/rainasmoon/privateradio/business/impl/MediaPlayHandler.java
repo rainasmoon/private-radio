@@ -131,6 +131,18 @@ public class MediaPlayHandler {
 		start();
 	}
 
+	
+	public void playUrlMedia(String url) throws Exception {
+		if (mediaPlayer == null) {
+			init();
+		}
+		else {
+			mediaPlayer.reset();
+		}
+		
+		setSource(url);
+		start();
+	}
 
 	public void playUriSong(Uri uri) throws Exception {
 
@@ -147,6 +159,36 @@ public class MediaPlayHandler {
 
 	public void reset() {
 		mediaPlayer.reset();
+		
+	}
+
+	public void playProgram(Program p) {
+		if (((AudioProgram) p).getFile() != null) {
+			Uri u = Uri.fromFile(((AudioProgram) p).getFile());
+			try {
+				playUriSong(u);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if (((AudioProgram) p).getId() != null) {
+			
+			try {
+				playBanchOfLocalMedia(((AudioProgram) p).getId());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if (((AudioProgram) p).getUrl() != null) {
+			try {
+				playUrlMedia(((AudioProgram) p).getUrl());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
