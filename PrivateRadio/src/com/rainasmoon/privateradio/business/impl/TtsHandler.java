@@ -32,11 +32,19 @@ public class TtsHandler {
 	private Context context;
 	
 	private PlayHandlerImpl playHandlerImpl;
+	private static TtsHandler ttsHandler;
 
 
-	public TtsHandler(PlayHandlerImpl playHandlerImpl) {
+	private TtsHandler(PlayHandlerImpl playHandlerImpl) {
 		context = Utils.context;
 		this.playHandlerImpl = playHandlerImpl;
+	}
+	
+	public static TtsHandler instanceTtsHandler(PlayHandlerImpl playHandlerImpl) {
+		if (ttsHandler == null) {
+			ttsHandler = new TtsHandler(playHandlerImpl);
+		}
+		return ttsHandler;
 	}
 	
 	public static void checkTts(int resultCode) {

@@ -25,11 +25,20 @@ public class MediaPlayHandler {
 	private Context context;
 	private PlayHandlerImpl playHandlerImpl;
 	
+	private static MediaPlayHandler mediaPlayHandler;
 
 
-	public MediaPlayHandler(PlayHandlerImpl playHandlerImpl) {
+	private MediaPlayHandler(PlayHandlerImpl playHandlerImpl) {
 		context = Utils.context;
 		this.playHandlerImpl = playHandlerImpl;
+	}
+	
+	public static MediaPlayHandler instanceMediaPlayHandler(PlayHandlerImpl playHandlerImpl) {
+		if (mediaPlayHandler == null) {
+			mediaPlayHandler = new MediaPlayHandler(playHandlerImpl);
+		}
+		
+		return mediaPlayHandler;
 	}
 
 	public void init() {

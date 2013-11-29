@@ -22,8 +22,8 @@ import com.rainasmoon.privateradio.utils.Utils;
 
 public class PlayHandlerImpl implements PlayHandler {
 
-	TtsHandler ttsHandler = new TtsHandler(this);
-	MediaPlayHandler mediaPlayHandler = new MediaPlayHandler(this);
+	TtsHandler ttsHandler = TtsHandler.instanceTtsHandler(this);
+	MediaPlayHandler mediaPlayHandler = MediaPlayHandler.instanceMediaPlayHandler(this);
 	
 	PrivateRadio radio;
 
@@ -32,6 +32,7 @@ public class PlayHandlerImpl implements PlayHandler {
 
 	public PlayHandlerImpl(PrivateRadio radio) {
 		this.radio = radio;
+		
 	}
 	
 	@Override
@@ -78,6 +79,10 @@ public class PlayHandlerImpl implements PlayHandler {
 	public void next() {
 		currentProgram++;
 		
+		if (programs == null || programs.size() == 0) {
+			radio.nextChannel();
+		}
+		
 		if (currentProgram < programs.size()) {
 			Program p = (Program) programs.get(currentProgram);
 			Toast.makeText(Utils.context,
@@ -103,6 +108,10 @@ public class PlayHandlerImpl implements PlayHandler {
 	}
 
 	public void playList(List<Program> programs) throws Exception {
+		if (programs == null || programs.size() ==0) {
+			Utils.log.info("no program in this channel...");
+			return;
+		}
 		this.programs = programs;
 		currentProgram = 0;
 		Program p = (Program) programs.get(currentProgram);

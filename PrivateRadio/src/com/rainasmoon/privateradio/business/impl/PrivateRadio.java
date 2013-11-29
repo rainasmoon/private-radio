@@ -256,7 +256,7 @@ public class PrivateRadio implements MagicRadio {
 	@Override
 	public void nextChannel() {
 		currentChannelId++;
-		playGeneratedPrograms();
+		playCurrentChannel();
 	}
 
 	public void nextMediaSource() {
