@@ -2,7 +2,7 @@ package com.rainasmoon.privateradio.sourcechanel.pocket;
 
 import java.net.URI;
 
-public abstract class Constants {
+public abstract class PocketConstants {
 
 	public static final String URL_TOKEN = "https://getpocket.com/v3/oauth/request";
 	

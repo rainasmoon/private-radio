@@ -26,7 +26,7 @@ import com.rainasmoon.privateradio.program.TextProgram;
 import com.rainasmoon.privateradio.sourcechanel.interneturl.InternetResouceHandler;
 import com.rainasmoon.privateradio.sourcechanel.localmedia.LocalMediaHandler;
 import com.rainasmoon.privateradio.sourcechanel.localmedia.SetFileFolder;
-import com.rainasmoon.privateradio.sourcechanel.pocket.Constants;
+import com.rainasmoon.privateradio.sourcechanel.pocket.PocketConstants;
 import com.rainasmoon.privateradio.sourcechanel.pocket.PocketHandler;
 import com.rainasmoon.privateradio.sourcechanel.rss.RssHandler;
 import com.rainasmoon.privateradio.sourcechanel.weibo.WeiboHandler;
@@ -143,7 +143,7 @@ public class PrivateRadio implements MagicRadio {
 	}
 	
 	private void playLocalMediaFolder() {
-		for (String s : com.rainasmoon.privateradio.sourcechanel.localmedia.Constants.LOCAL_FOLDERS) {
+		for (String s : com.rainasmoon.privateradio.sourcechanel.localmedia.LocalMediaConstants.LOCAL_FOLDERS) {
 			Utils.log.info("the folder is:" + s);
 			File folder = new File(s);
 			addFile(folder);
@@ -193,12 +193,12 @@ public class PrivateRadio implements MagicRadio {
 	}
 
 	private void playSelectLocalMedia() {
-		if (com.rainasmoon.privateradio.sourcechanel.localmedia.Constants.MY_PICK_SONG_URI == null) {
+		if (com.rainasmoon.privateradio.sourcechanel.localmedia.LocalMediaConstants.MY_PICK_SONG_URI == null) {
 			new SetFileFolder().pick();
 		} else {
 
 			program = new AudioProgram(
-					com.rainasmoon.privateradio.sourcechanel.localmedia.Constants.MY_PICK_SONG_URI);
+					com.rainasmoon.privateradio.sourcechanel.localmedia.LocalMediaConstants.MY_PICK_SONG_URI);
 			program.play();
 		}
 
@@ -282,7 +282,7 @@ public class PrivateRadio implements MagicRadio {
 	public void nextChannel() {	
 		if (currentChannel == Channel.RSS) {
 			subChannel++;
-			if (subChannel <  com.rainasmoon.privateradio.sourcechanel.rss.Constants.rss_list.length) {
+			if (subChannel <  com.rainasmoon.privateradio.sourcechanel.rss.RssConstants.rss_list.length) {
 				return;
 			}
 		} 	
@@ -337,7 +337,7 @@ public class PrivateRadio implements MagicRadio {
 			new Thread() {
 				@Override
 				public void run() {
-					programs.addAll(playRssMedia(com.rainasmoon.privateradio.sourcechanel.rss.Constants.rss_list[subChannel]));
+					programs.addAll(playRssMedia(com.rainasmoon.privateradio.sourcechanel.rss.RssConstants.rss_list[subChannel]));
 				}
 				
 			}.start();

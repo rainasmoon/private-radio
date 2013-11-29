@@ -2,7 +2,7 @@ package com.rainasmoon.privateradio.sourcechanel.weibo;
 
 import java.net.URI;
 
-public abstract class Constants {
+public abstract class WeiboConstants {
 	
 
     public static final String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";

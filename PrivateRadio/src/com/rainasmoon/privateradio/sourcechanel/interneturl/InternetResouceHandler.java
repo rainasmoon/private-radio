@@ -43,6 +43,7 @@ public class InternetResouceHandler {
 			wifiLock.acquire();																		// here
 
 		List<String> l = new ArrayList<String> ();
+		Utils.log.info("the wifi status:"  + isWiFiActive());
 		if (isWiFiActive()) {
 			l.add(url);
 			l.add(url2);

@@ -16,13 +16,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.rainasmoon.privateradio.utils.AccessTokenKeeper;
 import com.rainasmoon.privateradio.utils.Utils;
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
-public class PocketHandler extends Constants {
+public class PocketHandler extends PocketConstants {
 
 	java.util.logging.Logger log = java.util.logging.Logger.getLogger("wh:");
 
@@ -30,11 +32,11 @@ public class PocketHandler extends Constants {
 			ClientProtocolException, IOException {
 		System.out.println("yes.");
 
-		HttpPost request = new HttpPost(Constants.URL_TOKEN);
+		HttpPost request = new HttpPost(PocketConstants.URL_TOKEN);
 		// 先封装一个 JSON 对象
 		JSONObject param = new JSONObject();
-		param.put("consumer_key", Constants.CONSUMER_KEY);
-		param.put("redirect_uri", Constants.REDIRECT_URI);
+		param.put("consumer_key", PocketConstants.CONSUMER_KEY);
+		param.put("redirect_uri", PocketConstants.REDIRECT_URI);
 		// 绑定到请求 Entry
 		StringEntity se = new StringEntity(param.toString());
 		
@@ -70,10 +72,10 @@ public class PocketHandler extends Constants {
 			ClientProtocolException, IOException {
 		System.out.println("yes.");
 
-		HttpPost request = new HttpPost(Constants.URL_ACCESS_TOKEN);
+		HttpPost request = new HttpPost(PocketConstants.URL_ACCESS_TOKEN);
 		// 先封装一个 JSON 对象
 		JSONObject param = new JSONObject();
-		param.put("consumer_key", Constants.CONSUMER_KEY);
+		param.put("consumer_key", PocketConstants.CONSUMER_KEY);
 		param.put("code", token);
 		// 绑定到请求 Entry
 		StringEntity se = new StringEntity(param.toString());
@@ -117,10 +119,10 @@ public class PocketHandler extends Constants {
 			ClientProtocolException, IOException {
 		check();
 
-		HttpPost request = new HttpPost(Constants.URL_GET);
+		HttpPost request = new HttpPost(PocketConstants.URL_GET);
 
 		JSONObject param = new JSONObject();
-		param.put("consumer_key", Constants.CONSUMER_KEY);
+		param.put("consumer_key", PocketConstants.CONSUMER_KEY);
 		param.put("access_token", access_token);
 		param.put("count", DEFAULT_RETRIVE_LIMIT);
 		StringEntity se = new StringEntity(param.toString());
@@ -156,16 +158,22 @@ public class PocketHandler extends Constants {
 	private void check() throws ClientProtocolException, JSONException,
 			IOException {
 		if (access_token == null) {
-			Constants.token = retriveToken();
-			openWebPage(Constants.token);
+			PocketConstants.token = retriveToken();
+			openWebPage(PocketConstants.token);
 		}
 
 	}
 
 	public void dealWithCallBack() {
 		try {
-			String accessToken = retriveAccessToken(Constants.token);
-			Constants.access_token = accessToken;
+			String accessToken = retriveAccessToken(PocketConstants.token);
+			PocketConstants.access_token = accessToken;
+					
+
+			Utils.log.info("Token is:" + accessToken);
+	
+			AccessTokenKeeper.writePocketAccessToken(Utils.context, accessToken);
+			
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

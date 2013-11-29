@@ -2,7 +2,7 @@ package com.rainasmoon.privateradio.sourcechanel.localmedia;
 
 import android.net.Uri;
 
-public abstract class Constants {
+public abstract class LocalMediaConstants {
 
 	public static String MY_FAVORITE_FOLDER;
 	

@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rainasmoon.privateradio.R;
+import com.rainasmoon.privateradio.utils.AccessTokenKeeper;
 import com.rainasmoon.privateradio.utils.Utils;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuth;
@@ -88,7 +89,7 @@ public class WBAuthCodeActivity extends Activity {
         mAuthCodeButton.setEnabled(false);
 
         // 初始化微博对象
-        mWeiboAuth = new WeiboAuth(this, Constants.APP_KEY, Constants.REDIRECT_URL, Constants.SCOPE);
+        mWeiboAuth = new WeiboAuth(this, WeiboConstants.APP_KEY, WeiboConstants.REDIRECT_URL, WeiboConstants.SCOPE);
 
         // 第一步：获取 Code
         mCodeButton.setOnClickListener(new OnClickListener() {
@@ -102,7 +103,7 @@ public class WBAuthCodeActivity extends Activity {
         mAuthCodeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchTokenAsync(mCode, Constants.APP_SECRET);
+                fetchTokenAsync(mCode, WeiboConstants.APP_SECRET);
             }
         });
     }
@@ -162,10 +163,11 @@ public class WBAuthCodeActivity extends Activity {
                 mTokenText.setText(String.format(format, mAccessToken.getToken(), date));
                 mAuthCodeButton.setEnabled(false);
                 
-                Constants.access_token = mAccessToken.getToken();
+                WeiboConstants.access_token = mAccessToken.getToken();
+        		                
                 Utils.log.info("accessToken:" + mAccessToken.getToken());
                 
-                AccessTokenKeeper.writeAccessToken(WBAuthCodeActivity.this, mAccessToken);
+                AccessTokenKeeper.writeSinaAccessToken(WBAuthCodeActivity.this, mAccessToken);
                 
                 Toast.makeText(WBAuthCodeActivity.this, 
                         R.string.weibosdk_demo_toast_obtain_token_success, Toast.LENGTH_SHORT).show();
@@ -199,18 +201,18 @@ public class WBAuthCodeActivity extends Activity {
         requestParams.put(WBConstants.AUTH_PARAMS_REDIRECT_URL,  Constants.REDIRECT_URL);
         */
         WeiboParameters requestParams = new WeiboParameters();
-        requestParams.add(WBConstants.AUTH_PARAMS_CLIENT_ID,     Constants.APP_KEY);
+        requestParams.add(WBConstants.AUTH_PARAMS_CLIENT_ID,     WeiboConstants.APP_KEY);
         requestParams.add(WBConstants.AUTH_PARAMS_CLIENT_SECRET, appSecret);
         requestParams.add(WBConstants.AUTH_PARAMS_GRANT_TYPE,    "authorization_code");
         requestParams.add(WBConstants.AUTH_PARAMS_CODE,          authCode);
-        requestParams.add(WBConstants.AUTH_PARAMS_REDIRECT_URL,  Constants.REDIRECT_URL);
+        requestParams.add(WBConstants.AUTH_PARAMS_REDIRECT_URL,  WeiboConstants.REDIRECT_URL);
     
         /**
          * 请注意：
          * {@link RequestListener} 对应的回调是运行在后台线程中的，
          * 因此，需要使用 Handler 来配合更新 UI。
          */
-        AsyncWeiboRunner.request(Constants.OAUTH2_ACCESS_TOKEN_URL, requestParams, "POST", new RequestListener() {
+        AsyncWeiboRunner.request(WeiboConstants.OAUTH2_ACCESS_TOKEN_URL, requestParams, "POST", new RequestListener() {
             @Override
             public void onComplete(String response) {
                 LogUtil.d(TAG, "Response: " + response);

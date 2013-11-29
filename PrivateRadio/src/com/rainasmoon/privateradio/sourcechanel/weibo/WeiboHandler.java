@@ -25,7 +25,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
-public class WeiboHandler extends Constants {
+public class WeiboHandler extends WeiboConstants {
 
 	java.util.logging.Logger log = java.util.logging.Logger.getLogger("wh:");
 
@@ -51,7 +51,7 @@ public class WeiboHandler extends Constants {
 			ClientProtocolException, IOException {
 		check();
 
-		String url = Constants.URL_GET + "?access_token=" + Constants.access_token;
+		String url = WeiboConstants.URL_GET + "?access_token=" + WeiboConstants.access_token;
 		HttpGet request = new HttpGet(url);
 		
 		DefaultHttpClient client = new DefaultHttpClient();

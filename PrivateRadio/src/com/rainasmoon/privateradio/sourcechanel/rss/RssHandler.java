@@ -12,7 +12,7 @@ import org.xml.sax.XMLReader;
 
 import android.util.Log;
 
-public class RssHandler extends Constants{
+public class RssHandler extends RssConstants{
 
 	java.util.logging.Logger log = java.util.logging.Logger.getLogger("wh:");
 
