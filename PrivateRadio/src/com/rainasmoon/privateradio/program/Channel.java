@@ -10,4 +10,7 @@ public interface Channel {
 	
 	
 	public void generateProgramSchedule();
+	public void addProgram(Program textProgram);
+	public List<Program> getPrograms();
+	public void addAllPrograms(List<Program> programs);
 }

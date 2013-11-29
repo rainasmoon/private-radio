@@ -10,6 +10,7 @@ import com.rainasmoon.privateradio.utils.Utils;
 
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.AudioManager.OnAudioFocusChangeListener;
@@ -143,6 +144,20 @@ public class MediaPlayHandler {
 		setSource(url);
 		start();
 	}
+	
+	public void playFileMedia(AssetFileDescriptor afd) throws Exception {
+		if (mediaPlayer == null) {
+			init();
+		}
+		else {
+			mediaPlayer.reset();
+		}
+		
+		mediaPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+		start();
+	}
+	
+	
 
 	public void playUriSong(Uri uri) throws Exception {
 
@@ -171,6 +186,18 @@ public class MediaPlayHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			
+//			try {
+//				AssetFileDescriptor afd = Utils.activity.getAssets().openFd(((AudioProgram) p).getFile().getAbsolutePath());
+//				playFileMedia(afd);
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		    
+
+			
 		}
 		else if (((AudioProgram) p).getId() != null) {
 			
