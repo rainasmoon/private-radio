@@ -42,6 +42,8 @@ public class WeiboHandler extends WeiboConstants {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return Arrays.asList(new String[]{"微博没有更新喽！！！"});
 

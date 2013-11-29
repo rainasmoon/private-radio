@@ -26,6 +26,7 @@ import com.rainasmoon.privateradio.program.ChannelImpl;
 import com.rainasmoon.privateradio.program.Program;
 import com.rainasmoon.privateradio.program.TextProgram;
 import com.rainasmoon.privateradio.sourcechanel.interneturl.InternetResouceHandler;
+import com.rainasmoon.privateradio.sourcechanel.localmedia.LocalMediaConstants;
 import com.rainasmoon.privateradio.sourcechanel.localmedia.LocalMediaHandler;
 import com.rainasmoon.privateradio.sourcechanel.localmedia.SetFileFolder;
 import com.rainasmoon.privateradio.sourcechanel.pocket.PocketConstants;
@@ -36,16 +37,13 @@ import com.rainasmoon.privateradio.utils.Utils;
 
 public class PrivateRadio implements MagicRadio {
 
-	private MediaSourceWay currentMediaSource = MediaSourceWay.LOCAL_FOLDER;
+	private MediaSourceWay currentMediaSource = MediaSourceWay
+			.initMediaSource();
 	private Program program;
 	private PlayHandlerImpl handler;
 	private List<Channel> channels;
 	private int currentChannelId;
-	// private ArrayList<Program> programs;
-	private int subChannel;
-	private int preSubChannel;
-	private int unlikeCounter;
-	private MediaSourceWay preMediaSource = MediaSourceWay.LOCAL_FOLDER;
+	private int subMediaSourceWay;
 
 	@Override
 	public void play() {
@@ -56,13 +54,18 @@ public class PrivateRadio implements MagicRadio {
 
 	private void playGeneratedPrograms() {
 
-
 		channels = new ArrayList<Channel>();
 		playInitRadioChannel();
 
 		playLocalMediaFolder();
 
 		playBonuesChannel();
+
+		playCurrentChannel();
+
+	}
+
+	private void playCurrentChannel() {
 		handler = new PlayHandlerImpl(this);
 
 		try {
@@ -94,7 +97,7 @@ public class PrivateRadio implements MagicRadio {
 				" 《伊萨卡岛》（希）卡瓦菲斯     当你启程前往伊萨卡，但愿你的道路漫长，充满奇迹，充满发现。莱斯特律戈涅斯巨人，独眼巨人，愤怒的波塞冬海神——不要怕他们：你将不会在途中碰到诸如此类的怪物，只要你高扬你的思想，只要有一种特殊的感觉，接触你的精神和肉体。莱斯特律戈涅斯巨人，独眼巨人，野蛮的波塞冬海神——你将不会跟他们遭遇，除非你将他们一直带进你的灵魂，除非你的灵魂将他们树立在你的面前。但愿你的道路漫长。但愿那里有很多夏天的早晨，当你无比快乐和兴奋地进入你第一次见到的海港：但愿你在腓尼基人的贸易市场停步，购买精美的物件，珍珠母和珊瑚，琥珀和黑檀，各式各样销魂的香水——你要多销魂就有多销魂。愿你走访众多埃及城市，向那些有识之士讨教并继续讨教。 让伊萨卡常在你心中，抵达那里是你此行的目的。但路上不要过于匆促，最好多延长几年，那时当你上得了岛你也就老了，一路所得已经教你富甲四方，用不着伊萨卡来让你财源滚滚。用伊萨卡赋予你如此神奇的旅行，没有它你可不会启程前来。现在它再也没有什么可以给你的了。而如果你发现它原来是这么穷，那可不是伊萨卡想愚弄你。既然那时你已经变得很聪慧，并且见多识广，你也就不会不明白，这伊萨卡意味着什么。"));
 
 		channels.add(c);
-		
+
 	}
 
 	private void playInitRadioChannel() {
@@ -107,13 +110,13 @@ public class PrivateRadio implements MagicRadio {
 	}
 
 	private void playLocalMediaFolder() {
-		for (String s : com.rainasmoon.privateradio.sourcechanel.localmedia.LocalMediaConstants.LOCAL_FOLDERS) {
+		for (String s : LocalMediaConstants.LOCAL_FOLDERS) {
 			Utils.log.info("the folder is:" + s);
 			File folder = new File(s);
 			addFile(folder);
 		}
 
-		if (currentChannelId >= channels.size()-1 || channels.get(currentChannelId).getPrograms().size() < 5) {
+		if (currentChannelId >= channels.size() - 1) {
 			addAllLocalMedia();
 		}
 	}
@@ -138,11 +141,11 @@ public class PrivateRadio implements MagicRadio {
 			InternetResouceHandler handler = new InternetResouceHandler();
 			List<String> l = handler.getInternetMedia();
 			Channel c = new ChannelImpl("音乐电台");
-			
+
 			for (String url : l) {
 				c.addProgram(new AudioProgram(url));
 			}
-			
+
 			channels.add(c);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
@@ -198,7 +201,7 @@ public class PrivateRadio implements MagicRadio {
 		for (Long id : list) {
 			c.addProgram(new AudioProgram(id));
 		}
-		
+
 		channels.add(c);
 
 	}
@@ -252,19 +255,19 @@ public class PrivateRadio implements MagicRadio {
 
 	@Override
 	public void nextChannel() {
+		currentChannelId++;
+		playGeneratedPrograms();
+	}
+
+	public void nextMediaSource() {
 		if (currentMediaSource == MediaSourceWay.RSS) {
-			subChannel++;
-			preSubChannel = subChannel;
-			if (subChannel < com.rainasmoon.privateradio.sourcechanel.rss.RssConstants.rss_list.length) {
+			subMediaSourceWay++;
+			if (subMediaSourceWay < com.rainasmoon.privateradio.sourcechanel.rss.RssConstants.rss_list.length) {
 				return;
 			}
 		}
-		currentMediaSource = currentMediaSource.nextChannel();
-		
-		preMediaSource = currentMediaSource;
+		currentMediaSource = currentMediaSource.nextMediaSource();
 
-		currentChannelId++;
-		playGeneratedPrograms();
 	}
 
 	@Override
@@ -281,38 +284,24 @@ public class PrivateRadio implements MagicRadio {
 
 	public void next() {
 		handler.next();
-		unlikeCounter++;
-		Utils.log.info("unlikeCounter:" + unlikeCounter);
-		Utils.log.info("" + isSameChannel());
-		Utils.log.info("" + preMediaSource);
-		Utils.log.info("" + currentMediaSource);
-		Utils.log.info("" + preSubChannel);
-		Utils.log.info("" + subChannel);
 
-		if (unlikeCounter > 3) {
-			if (isSameChannel()) {
-				nextChannel();
-				unlikeCounter = 0;
-				setPreChannel();
-			}
+		channels.get(currentChannelId).unlike();
+
+		if (currentChannelId >= channels.size() - 1) {
+
+			loadMoreContent();
 		}
-	}
 
-	private void setPreChannel() {
-		preMediaSource = currentMediaSource;
-		preSubChannel = subChannel;
-	}
-
-	private boolean isSameChannel() {
-		if (preMediaSource == currentMediaSource && preSubChannel == subChannel) {
-			return true;
+		if (channels.get(currentChannelId).getUnlikeCounter() > 3) {
+			currentChannelId++;
+			playCurrentChannel();
 		}
-		return false;
+
 	}
 
 	public void loadMoreContent() {
 
-		nextChannel();
+		nextMediaSource();
 
 		Utils.log.info("nextChannel:" + currentMediaSource);
 
@@ -333,8 +322,8 @@ public class PrivateRadio implements MagicRadio {
 			new Thread() {
 				@Override
 				public void run() {
-					Channel c = new ChannelImpl("RSS 电台" + subChannel);
-					c.addAllPrograms(playRssMedia(com.rainasmoon.privateradio.sourcechanel.rss.RssConstants.rss_list[subChannel]));
+					Channel c = new ChannelImpl("RSS 电台" + subMediaSourceWay);
+					c.addAllPrograms(playRssMedia(com.rainasmoon.privateradio.sourcechanel.rss.RssConstants.rss_list[subMediaSourceWay]));
 					channels.add(c);
 				}
 
@@ -366,7 +355,6 @@ public class PrivateRadio implements MagicRadio {
 		}
 			break;
 		case LOCAL_FOLDER:
-			// playLocalFolfer();
 			break;
 		default:
 			break;

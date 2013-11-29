@@ -42,10 +42,15 @@ public enum MediaSourceWay {
 		return null;
 	}
 
-	public MediaSourceWay nextChannel() {
+	public MediaSourceWay nextMediaSource() {
 		if (channelId == MediaSourceWay.values().length - 1) {
 			return LOCAL_MEDIA;
 		}
 		return getChannel(channelId + 1);
+	}
+
+	public static MediaSourceWay initMediaSource() {
+		
+		return LOCAL_FOLDER;
 	}
 }

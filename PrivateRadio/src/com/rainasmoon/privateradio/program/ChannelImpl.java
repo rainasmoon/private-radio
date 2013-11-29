@@ -8,6 +8,7 @@ public class ChannelImpl implements Channel {
 	private String channelName;
 	private ChannelImpl subChannel;
 	private List<Program> programs;
+	private int unlikeCounter;
 
 	public ChannelImpl(String channelName) {
 		this.channelName = channelName;
@@ -50,6 +51,16 @@ public class ChannelImpl implements Channel {
 			programs = new ArrayList<Program> ();
 		}
 		programs.addAll(programs);
+	}
+
+	@Override
+	public void unlike() {
+		unlikeCounter++;
+		
+	}
+
+	public int getUnlikeCounter() {
+		return unlikeCounter;
 	}
 
 }
