@@ -8,8 +8,10 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.rainasmoon.privateradio.R;
 import com.rainasmoon.privateradio.business.impl.MediaPlayHandler;
 import com.rainasmoon.privateradio.business.impl.PrivateRadio;
 import com.rainasmoon.privateradio.business.impl.TtsHandler;
@@ -45,10 +47,12 @@ public class PlayHandlerImpl implements PlayHandler {
 	}
 
 	@Override
-	public void playProgram(Program program) {
-		if (program.isAudio()) {
-			//
+	public void playProgram(Program p) {
+		if (p.isAudio()) {
+			mediaPlayHandler.playProgram(p);
+		} else if (p.isText()) {
 
+			ttsHandler.speak(((TextProgram) p).getArticle());
 		}
 
 	}
@@ -73,20 +77,17 @@ public class PlayHandlerImpl implements PlayHandler {
 
 	public void next() {
 		currentProgram++;
-
-		
 		
 		if (currentProgram < programs.size()) {
 			Program p = (Program) programs.get(currentProgram);
 			Toast.makeText(Utils.context,
 					"正在播放：" + p.getDescription(), Toast.LENGTH_SHORT)
 					.show();
-			if (p.isAudio()) {
-				mediaPlayHandler.playProgram(p);
-			} else if (p.isText()) {
-
-				ttsHandler.speak(((TextProgram) p).getArticle());
-			}
+			Button startButton = (Button) Utils.activity
+					.findViewById(R.id.start_radio);
+			startButton.setText(p.getDescription() + " is playing...");
+			
+			playProgram(p);
 		}
 		else {
 			//here need to load more contents...
@@ -105,18 +106,8 @@ public class PlayHandlerImpl implements PlayHandler {
 		this.programs = programs;
 		currentProgram = 0;
 		Program p = (Program) programs.get(currentProgram);
-		if (p.isAudio()) {
-
-			mediaPlayHandler.playProgram(p);
-		} else if (p.isText()) {
-
-			try {
-				ttsHandler.speakChineseTts(((TextProgram) p).getArticle());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+				
+		playProgram(p);
 	}
 
 	

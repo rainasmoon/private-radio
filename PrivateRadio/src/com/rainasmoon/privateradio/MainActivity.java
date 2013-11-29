@@ -6,6 +6,7 @@ import java.util.Locale;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.rainasmoon.privateradio.business.impl.PrivateRadio;
+import com.rainasmoon.privateradio.business.impl.TtsHandler;
 import com.rainasmoon.privateradio.sourcechanel.localmedia.SetFileFolder;
 import com.rainasmoon.privateradio.utils.AccessTokenKeeper;
 import com.rainasmoon.privateradio.utils.Utils;
@@ -103,7 +105,7 @@ public class MainActivity extends Activity {
 	public void likeIt(View view) {
 
 		Log.i(TAG, "likt it...");
-		
+		TtsHandler.checkTtsData();				
 		Toast.makeText(getApplicationContext(),
 				"功能还在开发中哦...亲", Toast.LENGTH_SHORT)
 				.show();
@@ -113,12 +115,11 @@ public class MainActivity extends Activity {
 	public void unlikeIt(View view) {
 
 		Log.i(TAG, "unlike it...");
-
 		radio.next();
 
 	}
 
-	private static final int REQ_TTS_STATUS_CHECK = 0;
+
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -141,6 +142,13 @@ public class MainActivity extends Activity {
 
 			}
 		} 
+		else if (requestCode == TtsHandler.REQ_CHECK_TTS_DATA) {
+			TtsHandler.checkTts(resultCode);
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
+	
+
+	
 
 }
