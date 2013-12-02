@@ -47,6 +47,8 @@ public class TtsHandler {
 		return ttsHandler;
 	}
 	
+
+	
 	public static void checkTts(int resultCode) {
 		switch (resultCode) {
 		case TextToSpeech.Engine.CHECK_VOICE_DATA_PASS: // TTS引擎可用

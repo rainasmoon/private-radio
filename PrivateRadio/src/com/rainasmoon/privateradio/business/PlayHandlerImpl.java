@@ -78,10 +78,12 @@ public class PlayHandlerImpl implements PlayHandler {
 
 	public void next() {
 		currentProgram++;
+
 		
 		if (programs == null || programs.size() == 0) {
 			radio.nextChannel();
 		}
+
 		
 		if (currentProgram < programs.size()) {
 			Program p = (Program) programs.get(currentProgram);

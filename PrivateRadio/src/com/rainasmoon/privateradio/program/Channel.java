@@ -13,6 +13,8 @@ public interface Channel {
 	public void addProgram(Program textProgram);
 	public List<Program> getPrograms();
 	public void addAllPrograms(List<Program> programs);
+
 	public void unlike();
 	public int getUnlikeCounter();
+
 }
