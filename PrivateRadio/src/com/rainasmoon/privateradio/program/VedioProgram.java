@@ -58,4 +58,10 @@ public class VedioProgram   implements Program {
 		return null;
 	}
 
+	@Override
+	public long iid() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

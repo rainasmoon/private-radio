@@ -3,6 +3,8 @@ package com.rainasmoon.privateradio.program;
 import com.rainasmoon.privateradio.utils.Utils;
 
 public interface Program extends Play {
+	
+	public long iid();
 
 	
 	public void play();

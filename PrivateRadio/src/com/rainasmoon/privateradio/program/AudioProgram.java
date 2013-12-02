@@ -126,4 +126,10 @@ public class AudioProgram implements Program  {
 		this.url = url;
 	}
 
+	@Override
+	public long iid() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

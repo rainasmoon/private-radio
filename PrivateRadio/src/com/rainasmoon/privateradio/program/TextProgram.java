@@ -82,6 +82,12 @@ public class TextProgram  implements  Program  {
 		this.description = description;
 	}
 
+	@Override
+	public long iid() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 	
 	
