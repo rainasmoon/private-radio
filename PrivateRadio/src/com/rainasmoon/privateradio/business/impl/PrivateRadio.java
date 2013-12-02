@@ -39,14 +39,11 @@ public class PrivateRadio implements MagicRadio {
 
 	private MediaSourceWay currentMediaSource = MediaSourceWay
 			.initMediaSource();
-
 	private Program program;
 	private PlayHandlerImpl handler;
 	private List<Channel> channels;
 	private int currentChannelId;
-
 	private int subMediaSourceWay;
-
 
 	@Override
 	public void play() {
@@ -54,7 +51,6 @@ public class PrivateRadio implements MagicRadio {
 		playGeneratedPrograms();
 
 	}
-
 
 	private void playGeneratedPrograms() {
 
@@ -65,13 +61,11 @@ public class PrivateRadio implements MagicRadio {
 
 		playBonuesChannel();
 
-
 		playCurrentChannel();
 
 	}
 
 	private void playCurrentChannel() {
-
 		handler = new PlayHandlerImpl(this);
 
 		try {
@@ -122,9 +116,7 @@ public class PrivateRadio implements MagicRadio {
 			addFile(folder);
 		}
 
-
 		if (currentChannelId >= channels.size() - 1) {
-
 			addAllLocalMedia();
 		}
 	}
@@ -263,23 +255,18 @@ public class PrivateRadio implements MagicRadio {
 
 	@Override
 	public void nextChannel() {
-
 		currentChannelId++;
-		playCurrentChannel();
+		playGeneratedPrograms();
 	}
 
 	public void nextMediaSource() {
 		if (currentMediaSource == MediaSourceWay.RSS) {
 			subMediaSourceWay++;
 			if (subMediaSourceWay < com.rainasmoon.privateradio.sourcechanel.rss.RssConstants.rss_list.length) {
-
 				return;
 			}
 		}
-
 		currentMediaSource = currentMediaSource.nextMediaSource();
-
-
 
 	}
 
@@ -298,7 +285,6 @@ public class PrivateRadio implements MagicRadio {
 	public void next() {
 		handler.next();
 
-
 		channels.get(currentChannelId).unlike();
 
 		if (currentChannelId >= channels.size() - 1) {
@@ -311,47 +297,11 @@ public class PrivateRadio implements MagicRadio {
 			playCurrentChannel();
 		}
 
-=======
-		unlikeCounter++;
-		Utils.log.info("unlikeCounter:" + unlikeCounter);
-		Utils.log.info("" + isSameChannel());
-		Utils.log.info("" + preMediaSource);
-		Utils.log.info("" + currentMediaSource);
-		Utils.log.info("" + preSubChannel);
-		Utils.log.info("" + subChannel);
-
-		if (unlikeCounter > 3) {
-			if (isSameChannel()) {
-				nextChannel();
-				unlikeCounter = 0;
-				setPreChannel();
-			}
-		}
->>>>>>> branch 'master' of https://github.com/rainasmoon/private-radio.git
 	}
-<<<<<<< HEAD
-=======
-
-	private void setPreChannel() {
-		preMediaSource = currentMediaSource;
-		preSubChannel = subChannel;
-	}
-
-	private boolean isSameChannel() {
-		if (preMediaSource == currentMediaSource && preSubChannel == subChannel) {
-			return true;
-		}
-		return false;
-	}
->>>>>>> branch 'master' of https://github.com/rainasmoon/private-radio.git
 
 	public void loadMoreContent() {
 
-<<<<<<< HEAD
 		nextMediaSource();
-=======
-		nextChannel();
->>>>>>> branch 'master' of https://github.com/rainasmoon/private-radio.git
 
 		Utils.log.info("nextChannel:" + currentMediaSource);
 
@@ -372,13 +322,8 @@ public class PrivateRadio implements MagicRadio {
 			new Thread() {
 				@Override
 				public void run() {
-<<<<<<< HEAD
 					Channel c = new ChannelImpl("RSS 电台" + subMediaSourceWay);
 					c.addAllPrograms(playRssMedia(com.rainasmoon.privateradio.sourcechanel.rss.RssConstants.rss_list[subMediaSourceWay]));
-=======
-					Channel c = new ChannelImpl("RSS 电台" + subChannel);
-					c.addAllPrograms(playRssMedia(com.rainasmoon.privateradio.sourcechanel.rss.RssConstants.rss_list[subChannel]));
->>>>>>> branch 'master' of https://github.com/rainasmoon/private-radio.git
 					channels.add(c);
 				}
 
@@ -410,10 +355,6 @@ public class PrivateRadio implements MagicRadio {
 		}
 			break;
 		case LOCAL_FOLDER:
-<<<<<<< HEAD
-=======
-			// playLocalFolfer();
->>>>>>> branch 'master' of https://github.com/rainasmoon/private-radio.git
 			break;
 		default:
 			break;
