@@ -18,7 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class FilePickerActivity extends Activity implements OnClickListener {
+public class FilePickerActivity extends Activity implements OnClickListener { 
 
 	private ListView lv2;
 
