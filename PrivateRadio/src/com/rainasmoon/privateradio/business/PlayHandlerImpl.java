@@ -80,8 +80,9 @@ public class PlayHandlerImpl implements PlayHandler {
 		currentProgram++;
 
 		
-		if (programs == null || programs.size() == 0) {
+		if (programs == null || programs.size() == 0 || currentProgram >= programs.size()) {
 			radio.nextChannel();
+			return;
 		}
 
 		
@@ -100,10 +101,6 @@ public class PlayHandlerImpl implements PlayHandler {
 			//here need to load more contents...
 			
 			
-		}
-		
-		if (currentProgram > programs.size() - 3) {
-			radio.loadMoreContent();
 		}
 		
 		

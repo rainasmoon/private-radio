@@ -36,7 +36,6 @@ public class RSSSourceHandler extends DefaultHandler {
 		// 这个方法在解析xml文档的一开始执行,一般我们需要在该方法中初始化解析过程中有可能用到的变量
 		rssFeed = new RSSFeed();
 		rssItem = new RSSItem();
-		Log.i(TAG, "creat item.");
 	}
 
 	public void endDocument() throws SAXException {
@@ -55,7 +54,6 @@ public class RSSSourceHandler extends DefaultHandler {
 
 		// 标记我们处理到哪个标签
 
-		Log.i(TAG, "creat item.");
 		if (localName.equals("channel")) {// channel这个标签没有任何值得我们关心的内容，所以currentstate置为0
 			currentstate = 0;
 			return;
@@ -124,7 +122,6 @@ public class RSSSourceHandler extends DefaultHandler {
 	}
 
 	public void characters(char ch[], int start, int length) {// 这个方法在解析标签内容(即开始标记－结束标记之间的部分)时执行,一般我们在里这获取元素体内容
-		Log.i(TAG, "creat item.");
 		String theString = new String(ch, start, length); // 获取元素体内容
 		switch (currentstate) {// 根据currentstate标记判断这个元素体是属于我们关心的哪个元素
 		case RSS_TITLE:

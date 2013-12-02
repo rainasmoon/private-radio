@@ -24,20 +24,20 @@ public class MediaPlayHandler {
 	private MediaPlayer mediaPlayer;
 	private Context context;
 	private PlayHandlerImpl playHandlerImpl;
-	
-	private static MediaPlayHandler mediaPlayHandler;
 
+	private static MediaPlayHandler mediaPlayHandler;
 
 	private MediaPlayHandler(PlayHandlerImpl playHandlerImpl) {
 		context = Utils.context;
 		this.playHandlerImpl = playHandlerImpl;
 	}
-	
-	public static MediaPlayHandler instanceMediaPlayHandler(PlayHandlerImpl playHandlerImpl) {
+
+	public static MediaPlayHandler instanceMediaPlayHandler(
+			PlayHandlerImpl playHandlerImpl) {
 		if (mediaPlayHandler == null) {
 			mediaPlayHandler = new MediaPlayHandler(playHandlerImpl);
 		}
-		
+
 		return mediaPlayHandler;
 	}
 
@@ -78,11 +78,11 @@ public class MediaPlayHandler {
 
 		});
 		mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
-			
+
 			@Override
 			public void onCompletion(MediaPlayer mp) {
 				playHandlerImpl.next();
-				
+
 			}
 		});
 	}
@@ -132,58 +132,52 @@ public class MediaPlayHandler {
 	public void playBanchOfLocalMedia(long id) throws Exception {
 		if (mediaPlayer == null) {
 			init();
-		}
-		else {
+		} else {
 			mediaPlayer.reset();
 		}
-		
+
 		setSource(id);
 		start();
 	}
 
-	
 	public void playUrlMedia(String url) throws Exception {
 		if (mediaPlayer == null) {
 			init();
-		}
-		else {
+		} else {
 			mediaPlayer.reset();
 		}
-		
+
 		setSource(url);
 		start();
 	}
-	
+
 	public void playFileMedia(AssetFileDescriptor afd) throws Exception {
 		if (mediaPlayer == null) {
 			init();
-		}
-		else {
+		} else {
 			mediaPlayer.reset();
 		}
-		
-		mediaPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+
+		mediaPlayer.setDataSource(afd.getFileDescriptor(),
+				afd.getStartOffset(), afd.getLength());
 		start();
 	}
-	
-	
 
 	public void playUriSong(Uri uri) throws Exception {
 
 		if (mediaPlayer == null) {
 			init();
-		}
-		else {
+		} else {
 			mediaPlayer.reset();
 		}
-		
+
 		setSource(uri);
 		start();
 	}
 
 	public void reset() {
 		mediaPlayer.reset();
-		
+
 	}
 
 	public void playProgram(Program p) {
@@ -195,39 +189,33 @@ public class MediaPlayHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
-//			try {
-//				AssetFileDescriptor afd = Utils.activity.getAssets().openFd(((AudioProgram) p).getFile().getAbsolutePath());
-//				playFileMedia(afd);
-//			} catch (Exception e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		    
 
-			
-		}
-		else if (((AudioProgram) p).getId() != null) {
-			
+			// try {
+			// AssetFileDescriptor afd =
+			// Utils.activity.getAssets().openFd(((AudioProgram)
+			// p).getFile().getAbsolutePath());
+			// playFileMedia(afd);
+			// } catch (Exception e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
+			//
+
+		} else if (((AudioProgram) p).getId() != null) {
+
 			try {
 				playBanchOfLocalMedia(((AudioProgram) p).getId());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		else if (((AudioProgram) p).getUrl() != null) {
+		} else if (((AudioProgram) p).getUrl() != null) {
 			try {
 				playUrlMedia(((AudioProgram) p).getUrl());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
-	}
 
-	
+	}
 
 }
