@@ -23,8 +23,8 @@ public class ChannelImpl implements Channel {
 	
 	@Override
 	public String getChannelName() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return channelName;
 	}
 
 	@Override

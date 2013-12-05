@@ -53,7 +53,12 @@ public class PlayHandlerImpl implements PlayHandler {
 			mediaPlayHandler.playProgram(p);
 		} else if (p.isText()) {
 
-			ttsHandler.speak(((TextProgram) p).getArticle());
+			try {
+				ttsHandler.speak(((TextProgram) p).getArticle());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -81,6 +86,7 @@ public class PlayHandlerImpl implements PlayHandler {
 
 		
 		if (programs == null || programs.size() == 0 || currentProgram >= programs.size()) {
+			Utils.log.info("next Channel:");
 			radio.nextChannel();
 			return;
 		}
@@ -99,7 +105,7 @@ public class PlayHandlerImpl implements PlayHandler {
 		}
 		else {
 			//here need to load more contents...
-			
+			Utils.log.info("WTF here???");
 			
 		}
 		
@@ -114,7 +120,7 @@ public class PlayHandlerImpl implements PlayHandler {
 		this.programs = programs;
 		currentProgram = 0;
 		Program p = (Program) programs.get(currentProgram);
-				
+		Utils.log.info("playing program:" + p.getDescription());		
 		playProgram(p);
 	}
 

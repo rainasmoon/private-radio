@@ -96,6 +96,8 @@ public class MainActivity extends Activity {
 		
 		Log.i(TAG, "stop...");
 		
+		TtsHandler.instanceTtsHandler(null).playTest();
+		
 		Toast.makeText(getApplicationContext(),
 				"功能还在开发中哦...亲", Toast.LENGTH_SHORT)
 				.show();
@@ -115,7 +117,7 @@ public class MainActivity extends Activity {
 	public void unlikeIt(View view) {
 
 		Log.i(TAG, "unlike it...");
-		radio.next();
+		radio.unlike();
 
 	}
 

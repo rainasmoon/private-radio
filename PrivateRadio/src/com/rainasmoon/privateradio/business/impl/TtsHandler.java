@@ -24,7 +24,7 @@ import com.rainasmoon.privateradio.program.Program;
 import com.rainasmoon.privateradio.program.TextProgram;
 import com.rainasmoon.privateradio.utils.Utils;
 
-public class TtsHandler {
+public class TtsHandler implements OnInitListener, OnUtteranceCompletedListener {
 
 	public static final int REQ_CHECK_TTS_DATA = 110; // TTS数据校验请求值
 
@@ -32,6 +32,10 @@ public class TtsHandler {
 	private Context context;
 
 	private PlayHandlerImpl playHandlerImpl;
+
+	private String article;
+
+	private boolean STATUS_READY;
 	private static TtsHandler ttsHandler;
 
 	private TtsHandler(PlayHandlerImpl playHandlerImpl) {
@@ -49,12 +53,7 @@ public class TtsHandler {
 	public static void checkTts(int resultCode) {
 		switch (resultCode) {
 		case TextToSpeech.Engine.CHECK_VOICE_DATA_PASS: // TTS引擎可用
-			// 针对于重新绑定引擎，需要先shutdown()
-			// if (null != mTts) {
-			// ttsStop(); // 停止当前发声
-			// ttsShutDown(); // 释放资源
-			// }
-			// mTts = new TextToSpeech(this, this); // 创建TextToSpeech对象
+
 			break;
 		case TextToSpeech.Engine.CHECK_VOICE_DATA_BAD_DATA: // 数据错误
 		case TextToSpeech.Engine.CHECK_VOICE_DATA_MISSING_DATA: // 缺失数据资源
@@ -67,112 +66,9 @@ public class TtsHandler {
 		}
 	}
 
-	public void speakChineseTts(final String str) throws Exception {
+	private void initTTS() throws Exception {
 
-		AudioManager audioManager = (AudioManager) Utils.activity
-				.getSystemService(Context.AUDIO_SERVICE);
-		OnAudioFocusChangeListener ac = new AudioManager.OnAudioFocusChangeListener() {
-
-			@Override
-			public void onAudioFocusChange(int focusChange) {
-				stop();
-			}
-
-		};
-		int result = audioManager.requestAudioFocus(ac,
-				AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
-
-		if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-			throw new Exception("can't get Audio Focus.");
-		}
-
-		mSpeech = new TextToSpeech(context, new OnInitListener() {
-			@Override
-			public void onInit(int status) {
-				if (status == TextToSpeech.SUCCESS) {
-					// Utils.log.info("the mas is :" +
-					// mSpeech.getMaxSpeechInputLength());
-					UtteranceProgressListener list = new UtteranceProgressListener() {
-
-						@Override
-						public void onDone(String arg0) {
-							Utils.log.info("on Done is reached...");
-
-							Utils.activity.runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-
-									Toast.makeText(Utils.context,
-											"fuck is finished...",
-											Toast.LENGTH_SHORT).show();
-								}
-							});
-
-						}
-
-						@Override
-						public void onError(String arg0) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void onStart(String arg0) {
-							Utils.log.info("on start is reached...");
-
-							Utils.activity.runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-
-									Toast.makeText(Utils.context,
-											"fuch is begin...",
-											Toast.LENGTH_SHORT).show();
-								}
-							});
-
-						}
-					};
-					mSpeech.setOnUtteranceProgressListener(list);
-
-					mSpeech.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
-
-						@Override
-						public void onUtteranceCompleted(String utteranceId) {
-							Utils.activity.runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-
-									Toast.makeText(Utils.context,
-											"is finished...",
-											Toast.LENGTH_SHORT).show();
-
-									playHandlerImpl.next();
-
-								}
-							});
-
-						}
-					});
-
-					int result = mSpeech.setLanguage(Locale.CHINESE);
-
-					if (result == TextToSpeech.LANG_MISSING_DATA
-							|| result == TextToSpeech.LANG_NOT_SUPPORTED) {
-						Utils.log.info("not use");
-					} else {
-						Utils.log.info("speak begin...");
-
-						HashMap<String, String> params = new HashMap<String, String>();
-						params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,
-								"0");
-
-						mSpeech.speak(str, TextToSpeech.QUEUE_FLUSH, params);
-
-					}
-
-				}
-			}
-		});
+		mSpeech = new TextToSpeech(context, this);
 
 	}
 
@@ -189,9 +85,46 @@ public class TtsHandler {
 						Utils.log.info("not use");
 					} else {
 
-						long durationInMs = 1;
+						long durationInMs = 5000;
 						mSpeech.playSilence(durationInMs,
 								TextToSpeech.QUEUE_FLUSH, null);
+					}
+				}
+			}
+		});
+
+	}
+	
+	
+	public void playTest() {
+
+		mSpeech = new TextToSpeech(context, new OnInitListener() {
+			@Override
+			public void onInit(int status) {
+				if (status == TextToSpeech.SUCCESS) {
+					int result = mSpeech.setLanguage(Locale.CHINESE);
+
+					if (result == TextToSpeech.LANG_MISSING_DATA
+							|| result == TextToSpeech.LANG_NOT_SUPPORTED) {
+						Utils.log.info("not use");
+					} else {
+
+						mSpeech.speak("这是第一个节目", TextToSpeech.QUEUE_ADD, null);
+						long durationInMs = 3000;
+						mSpeech.playSilence(durationInMs,
+								TextToSpeech.QUEUE_ADD, null);
+						
+						mSpeech.speak("这是第2个节目", TextToSpeech.QUEUE_ADD, null);
+						mSpeech.stop();
+						mSpeech.shutdown();
+						mSpeech.playSilence(durationInMs,
+								TextToSpeech.QUEUE_ADD, null);
+						mSpeech.speak("这是第3个节目", TextToSpeech.QUEUE_ADD, null);
+						mSpeech.playSilence(durationInMs,
+								TextToSpeech.QUEUE_ADD, null);
+						
+						//QUEUE_FLASH will remove all the pre text.
+						mSpeech.speak("这是第4个节目", TextToSpeech.QUEUE_ADD, null);
 					}
 				}
 			}
@@ -230,26 +163,94 @@ public class TtsHandler {
 
 	public void stop() {
 		mSpeech.stop();
-		mSpeech.shutdown();
+//		mSpeech.shutdown();
+//		mSpeech = null;
 	}
 
-	public void speak(String article) {
-		HashMap<String, String> params = new HashMap<String, String>();
-		params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "0");
-		if (mSpeech == null) {
+	public synchronized void speak(String article) throws Exception {
+
+		this.article = article;
+		
+		AudioManager audioManager = (AudioManager) Utils.activity
+				.getSystemService(Context.AUDIO_SERVICE);
+		OnAudioFocusChangeListener ac = new AudioManager.OnAudioFocusChangeListener() {
+
+			@Override
+			public void onAudioFocusChange(int focusChange) {
+				Utils.log.info("TTS focus changed...");
+//				stop();
+			}
+
+		};
+		int result = audioManager.requestAudioFocus(ac,
+				AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+
+		if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+			throw new Exception("can't get Audio Focus.");
+		}
+
+		
+		if (mSpeech == null || !STATUS_READY) {
 
 			// TODO init it?
 
 			Utils.log.info("TTS is null");
 			try {
-				speakChineseTts(article);
+				initTTS();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		else {
+			say();
+		}
+			
 
+	}
+
+	private void say() {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "0");
 		mSpeech.speak(article, TextToSpeech.QUEUE_FLUSH, params);
+	}
+	
+	@Override
+	public void onUtteranceCompleted(String utteranceId) {
 
+		Utils.activity.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+
+				Utils.log.info("TTS plays end." + article);
+				Toast.makeText(Utils.context, "is finished...",
+						Toast.LENGTH_SHORT).show();
+
+				playHandlerImpl.next();
+
+			}
+		});
+
+	}
+
+	@Override
+	public void onInit(int status) {
+		if (status == TextToSpeech.SUCCESS) {
+
+			mSpeech.setOnUtteranceCompletedListener(TtsHandler.this);
+
+			int result = mSpeech.setLanguage(Locale.CHINESE);
+
+			if (result == TextToSpeech.LANG_MISSING_DATA
+					|| result == TextToSpeech.LANG_NOT_SUPPORTED) {
+				Utils.log.info("not use");
+			} else {
+				Utils.log.info("speak begin...");
+				STATUS_READY = true;
+				say();
+			}
+
+		}
+		
 	}
 }

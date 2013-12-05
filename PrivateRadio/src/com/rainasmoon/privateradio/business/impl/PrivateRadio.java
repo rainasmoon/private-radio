@@ -38,8 +38,6 @@ import com.rainasmoon.privateradio.utils.Utils;
 
 public class PrivateRadio implements MagicRadio {
 
-	private MediaSourceWay currentMediaSource = MediaSourceWay
-			.initMediaSource();
 	private PlayHandlerImpl handler;
 	private List<Channel> channels;
 	private int currentChannelId;
@@ -55,12 +53,48 @@ public class PrivateRadio implements MagicRadio {
 	private void playGeneratedPrograms() {
 
 		channels = new ArrayList<Channel>();
+		
 		addInitRadioChannel();
 
 		addTestTtsRadioChannel();
+		
 		addBonuesChannel();
-		addLocalMediaFolder();
+		
+		addLocalSoftwareMediaFolder();
+		
+		addAllLocalMedia();
+		
+		addLocalPickFolder();
+		
+		playInternetMedia();
+		
+		new Thread() {
+			@Override
+			public void run() {
+				Channel c = new ChannelImpl("RSS 电台" + subMediaSourceWay);
+				c.addAllPrograms(addRssMedia(com.rainasmoon.privateradio.sourcechanel.rss.RssConstants.rss_list[subMediaSourceWay]));
+				channels.add(c);
+			}
 
+		}.start();
+		new Thread() {
+			@Override
+			public void run() {
+				Channel c = new ChannelImpl("Pocket 电台");
+				c.addAllPrograms(playPocket());
+				channels.add(c);
+			}
+
+		}.start();
+		new Thread() {
+			@Override
+			public void run() {
+				Channel c = new ChannelImpl("Weibo 电台");
+				c.addAllPrograms(playWeibo());
+				channels.add(c);
+			}
+
+		}.start();
 		
 
 		playCurrentChannel();
@@ -72,6 +106,7 @@ public class PrivateRadio implements MagicRadio {
 
 		try {
 
+			Utils.log.info("playing Channel: " + channels.get(currentChannelId).getChannelName());
 			handler.playList(channels.get(currentChannelId).getPrograms());
 
 		} catch (IllegalArgumentException e) {
@@ -129,16 +164,13 @@ public class PrivateRadio implements MagicRadio {
 	}
 	
 
-	private void addLocalMediaFolder() {
+	private void addLocalSoftwareMediaFolder() {
 		for (String s : LocalMediaConstants.LOCAL_FOLDERS) {
 			Utils.log.info("the folder is:" + s);
 			File folder = new File(s);
 			addFile(folder);
 		}
 
-		if (currentChannelId >= channels.size() - 1) {
-			addAllLocalMedia();
-		}
 	}
 	
 	private void addLocalPickFolder() {
@@ -281,16 +313,7 @@ public class PrivateRadio implements MagicRadio {
 		playCurrentChannel();
 	}
 
-	public void nextMediaSource() {
-		if (currentMediaSource == MediaSourceWay.RSS) {
-			subMediaSourceWay++;
-			if (subMediaSourceWay < com.rainasmoon.privateradio.sourcechanel.rss.RssConstants.rss_list.length) {
-				return;
-			}
-		}
-		currentMediaSource = currentMediaSource.nextMediaSource();
 
-	}
 
 	@Override
 	public void preChannel() {
@@ -304,13 +327,8 @@ public class PrivateRadio implements MagicRadio {
 
 	}
 
-	public void next() {
+	public void unlike() {
 		channels.get(currentChannelId).unlike();
-
-		if (currentChannelId >= channels.size() - 3) {
-
-			loadMoreContent();
-		}
 
 		if (channels.get(currentChannelId).getUnlikeCounter() > 3) {
 			nextChannel();
@@ -320,69 +338,6 @@ public class PrivateRadio implements MagicRadio {
 
 	}
 
-	public void loadMoreContent() {
 
-		nextMediaSource();
-
-		Utils.log.info("nextChannel:" + currentMediaSource);
-
-		Toast.makeText(Utils.context, "正在加载更多内容：" + currentMediaSource,
-				Toast.LENGTH_SHORT).show();
-
-		switch (currentMediaSource) {
-		case LOCAL_MEDIA:
-			addAllLocalMedia();
-			break;
-		case SELECT_LOCAL_MEDIA:
-			addLocalPickFolder();
-			break;
-		case INTERNET_MEDIA:
-			playInternetMedia();
-			break;
-		case RSS: {
-			new Thread() {
-				@Override
-				public void run() {
-					Channel c = new ChannelImpl("RSS 电台" + subMediaSourceWay);
-					c.addAllPrograms(addRssMedia(com.rainasmoon.privateradio.sourcechanel.rss.RssConstants.rss_list[subMediaSourceWay]));
-					channels.add(c);
-				}
-
-			}.start();
-		}
-			break;
-		case POCKET: {
-			new Thread() {
-				@Override
-				public void run() {
-					Channel c = new ChannelImpl("Pocket 电台");
-					c.addAllPrograms(playPocket());
-					channels.add(c);
-				}
-
-			}.start();
-		}
-			break;
-		case WEIBO: {
-			new Thread() {
-				@Override
-				public void run() {
-					Channel c = new ChannelImpl("Weibo 电台");
-					c.addAllPrograms(playWeibo());
-					channels.add(c);
-				}
-
-			}.start();
-		}
-			break;
-		case LOCAL_FOLDER:
-			addLocalMediaFolder();
-			break;
-		default:
-			break;
-
-		}
-
-	}
 
 }
