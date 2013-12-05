@@ -235,7 +235,7 @@ public class TtsHandler implements OnInitListener, OnUtteranceCompletedListener 
 			public void run() {
 
 //				stop();
-				mSpeech.stop();
+//				mSpeech.stop();
 				Utils.log.info("TTS plays end." + article);
 				Toast.makeText(Utils.context, "is finished...",
 						Toast.LENGTH_SHORT).show();

@@ -10,8 +10,10 @@ public abstract class LocalMediaConstants {
 	
 	public static String Podcast = "/storage/sdcard0/BeyondPod/Podcasts";
 	
+	public static String Ttpod = "/storage/sdcard0/ttpod/song";
+	
 	public static String [] LOCAL_FOLDERS = new String[] {
-		"/storage/sdcard0/ttpod/song"
+		Ttpod, Podcast
 	};
 	
 }

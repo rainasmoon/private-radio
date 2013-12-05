@@ -24,6 +24,7 @@ import com.rainasmoon.privateradio.program.AudioProgram;
 import com.rainasmoon.privateradio.program.Channel;
 import com.rainasmoon.privateradio.program.ChannelImpl;
 import com.rainasmoon.privateradio.program.Program;
+import com.rainasmoon.privateradio.program.SilenceProgram;
 import com.rainasmoon.privateradio.program.TextProgram;
 import com.rainasmoon.privateradio.sourcechanel.interneturl.InternetResouceHandler;
 import com.rainasmoon.privateradio.sourcechanel.localmedia.LocalMediaConstants;
@@ -66,7 +67,7 @@ public class PrivateRadio implements MagicRadio {
 
 		addLocalPickFolder();
 
-		playInternetMedia();
+		addInternetMedia();
 
 		new Thread() {
 			@Override
@@ -133,6 +134,7 @@ public class PrivateRadio implements MagicRadio {
 		c.addProgram(new TextProgram(
 				" 《伊萨卡岛》（希）卡瓦菲斯     当你启程前往伊萨卡，但愿你的道路漫长，充满奇迹，充满发现。莱斯特律戈涅斯巨人，独眼巨人，愤怒的波塞冬海神——不要怕他们：你将不会在途中碰到诸如此类的怪物，只要你高扬你的思想，只要有一种特殊的感觉，接触你的精神和肉体。莱斯特律戈涅斯巨人，独眼巨人，野蛮的波塞冬海神——你将不会跟他们遭遇，除非你将他们一直带进你的灵魂，除非你的灵魂将他们树立在你的面前。但愿你的道路漫长。但愿那里有很多夏天的早晨，当你无比快乐和兴奋地进入你第一次见到的海港：但愿你在腓尼基人的贸易市场停步，购买精美的物件，珍珠母和珊瑚，琥珀和黑檀，各式各样销魂的香水——你要多销魂就有多销魂。愿你走访众多埃及城市，向那些有识之士讨教并继续讨教。 让伊萨卡常在你心中，抵达那里是你此行的目的。但路上不要过于匆促，最好多延长几年，那时当你上得了岛你也就老了，一路所得已经教你富甲四方，用不着伊萨卡来让你财源滚滚。用伊萨卡赋予你如此神奇的旅行，没有它你可不会启程前来。现在它再也没有什么可以给你的了。而如果你发现它原来是这么穷，那可不是伊萨卡想愚弄你。既然那时你已经变得很聪慧，并且见多识广，你也就不会不明白，这伊萨卡意味着什么。"));
 
+		c.addProgram(new SilenceProgram());
 		channels.add(c);
 
 	}
@@ -142,9 +144,15 @@ public class PrivateRadio implements MagicRadio {
 
 		c.addProgram(new TextProgram(
 				"问我爱你有多深，私人定制电台代表我的心。欢迎来到这高端大气上当了的个人电台播报软件。"));
+		
+//		c.addProgram(new SilenceProgram());
 
 		c.addProgram(new TextProgram(
 				"You have to let it all go, Neo, fear, doubt, and disbelief. Free your mind. "));
+//		c.addProgram(new SilenceProgram());
+		
+		c.addProgram(new TextProgram(
+				"This will be passed to ARS if there is a ARS error, they are all related with the validation of business logic such as: we can’t pass “Income Protection” & “Income Protection (super)” to ARS simultaneously."));
 
 		channels.add(c);
 	}
@@ -155,8 +163,11 @@ public class PrivateRadio implements MagicRadio {
 		c.addProgram(new TextProgram(
 				"我在试图把你这种生命体作一个归类的时候，启示来了，所以我知道，你其实不是哺乳动物，我们这个星球上的每一种哺乳动物都有一种适应环境变化，取得平衡的本能演化，但你们人却没有，你们找到一个地方，然后就繁殖、繁殖、繁殖，直到所有的自然资源都被用尽，你们要想生存，唯一的办法就是扩散出去，侵占另一个地方，这个星球上另有一种生命体生存方式同你们相象，想知道是什么吗？病毒！人类是一种疾病，本星球的癌症，一场瘟疫。"));
 
+//		c.addProgram(new SilenceProgram());
+		
 		c.addProgram(new TextProgram(
 				"You have to let it all go, Neo, fear, doubt, and disbelief. Free your mind. "));
+//		c.addProgram(new SilenceProgram());
 
 		channels.add(c);
 	}
@@ -193,7 +204,7 @@ public class PrivateRadio implements MagicRadio {
 		channels.add(c);
 	}
 
-	private void playInternetMedia() {
+	private void addInternetMedia() {
 
 		try {
 			InternetResouceHandler handler = new InternetResouceHandler();

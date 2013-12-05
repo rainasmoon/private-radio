@@ -14,9 +14,11 @@ import android.widget.Toast;
 import com.rainasmoon.privateradio.R;
 import com.rainasmoon.privateradio.business.impl.MediaPlayHandler;
 import com.rainasmoon.privateradio.business.impl.PrivateRadio;
+import com.rainasmoon.privateradio.business.impl.SilenceHandler;
 import com.rainasmoon.privateradio.business.impl.TtsHandler;
 import com.rainasmoon.privateradio.program.AudioProgram;
 import com.rainasmoon.privateradio.program.Program;
+import com.rainasmoon.privateradio.program.SilenceProgram;
 import com.rainasmoon.privateradio.program.TextProgram;
 import com.rainasmoon.privateradio.utils.Utils;
 
@@ -24,6 +26,7 @@ public class PlayHandlerImpl implements PlayHandler {
 
 	TtsHandler ttsHandler = TtsHandler.instanceTtsHandler(this);
 	MediaPlayHandler mediaPlayHandler = MediaPlayHandler.instanceMediaPlayHandler(this);
+	SilenceHandler silenceHandler = SilenceHandler.instanceSilenceHandler(this);
 	
 	PrivateRadio radio;
 
@@ -49,6 +52,7 @@ public class PlayHandlerImpl implements PlayHandler {
 
 	@Override
 	public void playProgram(Program p) {
+		Utils.log.info("play P:" + p);
 		if (p.isAudio()) {
 			mediaPlayHandler.playProgram(p);
 		} else if (p.isText()) {
@@ -59,6 +63,10 @@ public class PlayHandlerImpl implements PlayHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		else if (p instanceof SilenceProgram) {
+			Utils.log.info("silence for:" + ((SilenceProgram)p).getSilenceTime());
+//			silenceHandler.shutup(((SilenceProgram)p).getSilenceTime());
 		}
 
 	}
