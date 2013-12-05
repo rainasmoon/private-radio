@@ -13,7 +13,6 @@ public class TextProgram  implements  Program  {
 	private String description;
 	
 	private String article;
-	private TtsHandler ttsHandler;
 	
 	public TextProgram(String article) {
 		this.article = article;
@@ -33,7 +32,7 @@ public class TextProgram  implements  Program  {
 	
 	@Override
 	public void stop() {
-		ttsHandler.stop();
+		
 	}
 
 	@Override

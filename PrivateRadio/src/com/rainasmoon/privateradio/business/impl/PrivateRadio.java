@@ -53,21 +53,21 @@ public class PrivateRadio implements MagicRadio {
 	private void playGeneratedPrograms() {
 
 		channels = new ArrayList<Channel>();
-		
+
 		addInitRadioChannel();
 
-		addTestTtsRadioChannel();
-		
-		addBonuesChannel();
-		
 		addLocalSoftwareMediaFolder();
-		
+
+		addTestTtsRadioChannel();
+
 		addAllLocalMedia();
-		
+
+		addBonuesChannel();
+
 		addLocalPickFolder();
-		
+
 		playInternetMedia();
-		
+
 		new Thread() {
 			@Override
 			public void run() {
@@ -95,7 +95,6 @@ public class PrivateRadio implements MagicRadio {
 			}
 
 		}.start();
-		
 
 		playCurrentChannel();
 
@@ -106,7 +105,8 @@ public class PrivateRadio implements MagicRadio {
 
 		try {
 
-			Utils.log.info("playing Channel: " + channels.get(currentChannelId).getChannelName());
+			Utils.log.info("playing Channel: "
+					+ channels.get(currentChannelId).getChannelName());
 			handler.playList(channels.get(currentChannelId).getPrograms());
 
 		} catch (IllegalArgumentException e) {
@@ -143,26 +143,23 @@ public class PrivateRadio implements MagicRadio {
 		c.addProgram(new TextProgram(
 				"问我爱你有多深，私人定制电台代表我的心。欢迎来到这高端大气上当了的个人电台播报软件。"));
 
-		
 		c.addProgram(new TextProgram(
 				"You have to let it all go, Neo, fear, doubt, and disbelief. Free your mind. "));
-		
+
 		channels.add(c);
 	}
-	
+
 	private void addTestTtsRadioChannel() {
 		Channel c = new ChannelImpl("测试电台");
 
 		c.addProgram(new TextProgram(
 				"我在试图把你这种生命体作一个归类的时候，启示来了，所以我知道，你其实不是哺乳动物，我们这个星球上的每一种哺乳动物都有一种适应环境变化，取得平衡的本能演化，但你们人却没有，你们找到一个地方，然后就繁殖、繁殖、繁殖，直到所有的自然资源都被用尽，你们要想生存，唯一的办法就是扩散出去，侵占另一个地方，这个星球上另有一种生命体生存方式同你们相象，想知道是什么吗？病毒！人类是一种疾病，本星球的癌症，一场瘟疫。"));
 
-		
 		c.addProgram(new TextProgram(
 				"You have to let it all go, Neo, fear, doubt, and disbelief. Free your mind. "));
-		
+
 		channels.add(c);
 	}
-	
 
 	private void addLocalSoftwareMediaFolder() {
 		for (String s : LocalMediaConstants.LOCAL_FOLDERS) {
@@ -172,7 +169,7 @@ public class PrivateRadio implements MagicRadio {
 		}
 
 	}
-	
+
 	private void addLocalPickFolder() {
 		for (String s : PickerMediaConstants.LOCAL_FOLDERS) {
 			Utils.log.info("the folder is:" + s);
@@ -226,8 +223,6 @@ public class PrivateRadio implements MagicRadio {
 		}
 	}
 
-
-
 	private List<Program> addRssMedia(String rssUrl) {
 
 		List<Program> l = new ArrayList<Program>();
@@ -247,14 +242,14 @@ public class PrivateRadio implements MagicRadio {
 	private void addAllLocalMedia() {
 		LocalMediaHandler localMediaHandler = new LocalMediaHandler();
 		List<Long> list = localMediaHandler.getBanchOfLocalMedia();
-		
+
 		Channel c = new ChannelImpl("本地所有音乐电台");
 		for (Long id : list) {
 			c.addProgram(new AudioProgram(id));
 		}
-		
+
 		channels.add(c);
-		
+
 	}
 
 	private List<Program> playPocket() {
@@ -307,13 +302,11 @@ public class PrivateRadio implements MagicRadio {
 	@Override
 	public void nextChannel() {
 		currentChannelId++;
-		if (currentChannelId >=  channels.size()) {
+		if (currentChannelId >= channels.size()) {
 			currentChannelId = 0;
 		}
 		playCurrentChannel();
 	}
-
-
 
 	@Override
 	public void preChannel() {
@@ -334,10 +327,8 @@ public class PrivateRadio implements MagicRadio {
 			nextChannel();
 			return;
 		}
-		handler.next();		
+		handler.next();
 
 	}
-
-
 
 }

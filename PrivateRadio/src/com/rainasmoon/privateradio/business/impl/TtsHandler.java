@@ -37,6 +37,8 @@ public class TtsHandler implements OnInitListener, OnUtteranceCompletedListener 
 
 	private boolean STATUS_READY;
 	private static TtsHandler ttsHandler;
+	
+	private boolean isOnFocused;
 
 	private TtsHandler(PlayHandlerImpl playHandlerImpl) {
 		context = Utils.context;
@@ -72,7 +74,7 @@ public class TtsHandler implements OnInitListener, OnUtteranceCompletedListener 
 
 	}
 
-	public void playSilence() {
+	private void playSilence() {
 
 		mSpeech = new TextToSpeech(context, new OnInitListener() {
 			@Override
@@ -161,13 +163,17 @@ public class TtsHandler implements OnInitListener, OnUtteranceCompletedListener 
 		}
 	}
 
-	public void stop() {
-		mSpeech.stop();
-//		mSpeech.shutdown();
-//		mSpeech = null;
+	private void stop() {
+		if (mSpeech != null) {
+			Utils.log.info("mSpeech is not null and try to stop...");
+			mSpeech.stop();
+			mSpeech.shutdown();
+			STATUS_READY = false;
+			mSpeech = null;
+		}
 	}
 
-	public synchronized void speak(String article) throws Exception {
+	public void speak(String article) throws Exception {
 
 		this.article = article;
 		
@@ -177,8 +183,13 @@ public class TtsHandler implements OnInitListener, OnUtteranceCompletedListener 
 
 			@Override
 			public void onAudioFocusChange(int focusChange) {
-				Utils.log.info("TTS focus changed...");
-//				stop();
+				Utils.log.info("TTS focus changed..." + focusChange);
+				if (mSpeech != null && mSpeech.isSpeaking()) {
+//					stop();
+
+					mSpeech.stop();
+				}
+				
 			}
 
 		};
@@ -203,10 +214,11 @@ public class TtsHandler implements OnInitListener, OnUtteranceCompletedListener 
 			}
 		}
 		else {
+			Utils.log.info("directly say...");
 			say();
 		}
 			
-
+		Utils.log.info("end say...");
 	}
 
 	private void say() {
@@ -222,6 +234,8 @@ public class TtsHandler implements OnInitListener, OnUtteranceCompletedListener 
 			@Override
 			public void run() {
 
+//				stop();
+				mSpeech.stop();
 				Utils.log.info("TTS plays end." + article);
 				Toast.makeText(Utils.context, "is finished...",
 						Toast.LENGTH_SHORT).show();
