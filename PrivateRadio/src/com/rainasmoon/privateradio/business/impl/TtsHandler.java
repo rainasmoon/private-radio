@@ -179,16 +179,44 @@ public class TtsHandler implements OnInitListener, OnUtteranceCompletedListener 
 		
 		AudioManager audioManager = (AudioManager) Utils.activity
 				.getSystemService(Context.AUDIO_SERVICE);
+		
 		OnAudioFocusChangeListener ac = new AudioManager.OnAudioFocusChangeListener() {
 
 			@Override
 			public void onAudioFocusChange(int focusChange) {
 				Utils.log.info("TTS focus changed..." + focusChange);
-				if (mSpeech != null && mSpeech.isSpeaking()) {
-//					stop();
+				 switch (focusChange) {
+			        case AudioManager.AUDIOFOCUS_GAIN:
+			            // resume playback
+//			            if (mMediaPlayer == null) initMediaPlayer();
+//			            else if (!mMediaPlayer.isPlaying()) mMediaPlayer.start();
+//			            mMediaPlayer.setVolume(1.0f, 1.0f);
+			        	
+			        	
+			            break;
 
-					mSpeech.stop();
-				}
+			        case AudioManager.AUDIOFOCUS_LOSS:
+			            // Lost focus for an unbounded amount of time: stop playback and release media player
+//			            if (mMediaPlayer.isPlaying()) mMediaPlayer.stop();
+//			            mMediaPlayer.release();
+//			            mMediaPlayer = null;
+			        	mSpeech.stop();
+			            break;
+
+			        case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+			            // Lost focus for a short time, but we have to stop
+			            // playback. We don't release the media player because playback
+			            // is likely to resume
+//			            if (mMediaPlayer.isPlaying()) mMediaPlayer.pause();
+			            break;
+
+			        case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+			            // Lost focus for a short time, but it's ok to keep playing
+			            // at an attenuated level
+//			            if (mMediaPlayer.isPlaying()) mMediaPlayer.setVolume(0.1f, 0.1f);
+			            break;
+			    }
+
 				
 			}
 
@@ -196,10 +224,13 @@ public class TtsHandler implements OnInitListener, OnUtteranceCompletedListener 
 		int result = audioManager.requestAudioFocus(ac,
 				AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 
+		
+		
 		if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
 			throw new Exception("can't get Audio Focus.");
 		}
 
+		isOnFocused = true;
 		
 		if (mSpeech == null || !STATUS_READY) {
 
@@ -223,7 +254,8 @@ public class TtsHandler implements OnInitListener, OnUtteranceCompletedListener 
 
 	private void say() {
 		HashMap<String, String> params = new HashMap<String, String>();
-		params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "0");
+		params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "1");
+		params.put(TextToSpeech.Engine.KEY_PARAM_STREAM, "" + AudioManager.STREAM_MUSIC);
 		mSpeech.speak(article, TextToSpeech.QUEUE_FLUSH, params);
 	}
 	
@@ -234,9 +266,6 @@ public class TtsHandler implements OnInitListener, OnUtteranceCompletedListener 
 			@Override
 			public void run() {
 
-//				stop();
-//				mSpeech.stop();
-				Utils.log.info("TTS plays end." + article);
 				Toast.makeText(Utils.context, "is finished...",
 						Toast.LENGTH_SHORT).show();
 
