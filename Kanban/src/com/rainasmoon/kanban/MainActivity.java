@@ -4,10 +4,6 @@ package com.rainasmoon.kanban;
 
 import android.app.Activity;
 import android.content.ClipData;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,6 +63,9 @@ public class MainActivity extends Activity {
 	  }
 
 	  class MyDragListener implements OnDragListener {
+		  
+		    Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+		    Drawable normalShape = getResources().getDrawable(R.drawable.shape);
 
 	    @Override
 	   
@@ -79,11 +78,11 @@ public class MainActivity extends Activity {
 	       	        break;
 	       	      case DragEvent.ACTION_DRAG_ENTERED:
 	       	    	Log.i("wh", "enter.");
-//	       	        v.setBackgroundDrawable(enterShape);
+	       	        v.setBackgroundDrawable(enterShape);
 	       	        break;
 	       	      case DragEvent.ACTION_DRAG_EXITED:
 	       	    	Log.i("wh", "exit.");
-//	       	        v.setBackgroundDrawable(normalShape);
+	       	        v.setBackgroundDrawable(normalShape);
 	       	        break;
 	       	      case DragEvent.ACTION_DROP:
 	       	        // Dropped, reassign View to ViewGroup
@@ -92,14 +91,13 @@ public class MainActivity extends Activity {
 	       	        ViewGroup owner = (ViewGroup) view.getParent();
 	       	        owner.removeView(view);
 	       	     LinearLayout container = (LinearLayout) v;
-//	       	        View container = recevieView;
 	       	        container.addView(view);
 	       	     Log.i("wh", "drop."+view.getContext());
 	       	        view.setVisibility(View.VISIBLE);
 	       	        break;
 	       	      case DragEvent.ACTION_DRAG_ENDED:
 	       	    	  Log.i("wh", "end.");
-//	       	        v.setBackgroundDrawable(normalShape);
+	       	        v.setBackgroundDrawable(normalShape);
 	       	      default:
 	       	        break;
 	       	      }
