@@ -23,11 +23,6 @@
             android:layout_height="wrap_content"
             android:text="Backlog" />
 
-        <TextView
-            android:id="@+id/test_drag"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="move this" />
     </LinearLayout>
 
     <LinearLayout
