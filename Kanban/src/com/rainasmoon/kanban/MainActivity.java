@@ -37,7 +37,6 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		initTestData();
 		init();
 
 	}
@@ -66,6 +65,7 @@ public class MainActivity extends FragmentActivity {
 		LayoutInflater factory = LayoutInflater.from(this);
 		final View textEntryView = factory.inflate(R.layout.dialog_add_item,
 				null);
+
 		return new AlertDialog.Builder(this)
 				.setIconAttribute(android.R.attr.alertDialogIcon)
 				.setTitle(R.string.app_name)
@@ -79,11 +79,12 @@ public class MainActivity extends FragmentActivity {
 										.findViewById(R.id.itemname);
 								String teamName = editText.getText().toString();
 
-								Log.i("wh", "input:" + teamName);
 								/* User clicked OK so do some stuff */
 								dataSet.addBacklog(teamName);
 								putData(backlogLayout, teamName);
 								saveData();
+
+								editText.setText("");
 							}
 						})
 				.setNegativeButton(R.string.cancel,
@@ -117,8 +118,10 @@ public class MainActivity extends FragmentActivity {
 		dataSet = DataKeeper
 				.readData(MainActivity.this.getApplicationContext());
 
-		if (dataSet == null) {
+		if (dataSet == null || dataSet.isEmpty()) {
+			Log.i("wh", "init test data...");
 			dataSet = new DataSet();
+			initTestData();
 		}
 
 		// put data
@@ -203,19 +206,15 @@ public class MainActivity extends FragmentActivity {
 			switch (event.getAction()) {
 			case DragEvent.ACTION_DRAG_STARTED:
 				// do nothing
-				Log.i("wh", "start.");
 				break;
 			case DragEvent.ACTION_DRAG_ENTERED:
-				Log.i("wh", "enter.");
 				v.setBackgroundDrawable(enterShape);
 				break;
 			case DragEvent.ACTION_DRAG_EXITED:
-				Log.i("wh", "exit.");
 				v.setBackgroundDrawable(normalShape);
 				break;
 			case DragEvent.ACTION_DROP:
 				// Dropped, reassign View to ViewGroup
-				Log.i("wh", "drop.");
 				View view = (View) event.getLocalState();
 				ViewGroup owner = (ViewGroup) view.getParent();
 				owner.removeView(view);
@@ -231,7 +230,6 @@ public class MainActivity extends FragmentActivity {
 
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
-				Log.i("wh", "end.");
 				v.setBackgroundDrawable(normalShape);
 			default:
 				break;
@@ -241,13 +239,7 @@ public class MainActivity extends FragmentActivity {
 
 		private void rearangeData(View view, ViewGroup owner, View v) {
 			String item = ((TextView) view).getText().toString();
-			Log.i("wh", "item:" + item);
 
-			Log.i("wh", "owner:" + owner.getId());
-			Log.i("wh", "backlog owner:" + backlogLayout.getId());
-
-			Log.i("wh", "target to:" + v.getId());
-			Log.i("wh", "plan :" + planLayout.getId());
 			if (owner.getId() == backlogLayout.getId()) {
 				dataSet.removeBacklog(item);
 

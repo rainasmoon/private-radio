@@ -2,12 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:baselineAligned="false"
+    android:background="#33B5E5"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
     <LinearLayout
@@ -21,7 +18,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Backlog" />
+            android:text="@string/title_backlog"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="5dp" />
 
     </LinearLayout>
 
@@ -36,7 +36,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Plan" />
+            android:text="@string/title_plan"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="5dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -50,7 +53,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="In Processs" />
+            android:text="@string/title_inprocess"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="5dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,7 +71,10 @@
             android:id="@+id/test_receive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Completed" />
+            android:text="@string/title_completed"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="5dp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -4,6 +4,11 @@
     <string name="app_name">Kanban</string>
     <string name="action_add">Add</string>
     
+    <string name="title_backlog">Backlog</string>
+    <string name="title_plan">Plan</string>
+    <string name="title_inprocess">Inprocess</string>
+    <string name="title_completed">Completed</string>
+    
     <string name="ok">ok</string>
     <string name="cancel">cancel</string>
 

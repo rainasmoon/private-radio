@@ -110,4 +110,12 @@ public class DataSet {
 		completed.add(item);
 
 	}
+
+	public boolean isEmpty() {
+		if (backlog.isEmpty() && plan.isEmpty() && inProcess.isEmpty()
+				&& completed.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
 }
