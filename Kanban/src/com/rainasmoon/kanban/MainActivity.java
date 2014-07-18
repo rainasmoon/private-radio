@@ -105,18 +105,26 @@ public class MainActivity extends FragmentActivity {
 
 	private void init() {
 		// init the 4 pannels' recevie listenner.
-		backlogLayout = (LinearLayout) findViewById(R.id.kanban_backlog);
-		backlogLayout.setOnDragListener(new MyDragListener());
-		planLayout = (LinearLayout) findViewById(R.id.kanban_plan);
-		planLayout.setOnDragListener(new MyDragListener());
-		inProcessLayout = (LinearLayout) findViewById(R.id.kanban_in_process);
-		inProcessLayout.setOnDragListener(new MyDragListener());
-		completedLayout = (LinearLayout) findViewById(R.id.kanban_completed);
-		completedLayout.setOnDragListener(new MyDragListener());
+		try {
+			backlogLayout = (LinearLayout) findViewById(R.id.kanban_backlog);
+			backlogLayout.setOnDragListener(new MyDragListener());
+			planLayout = (LinearLayout) findViewById(R.id.kanban_plan);
+			planLayout.setOnDragListener(new MyDragListener());
+			inProcessLayout = (LinearLayout) findViewById(R.id.kanban_in_process);
+			inProcessLayout.setOnDragListener(new MyDragListener());
+			completedLayout = (LinearLayout) findViewById(R.id.kanban_completed);
+			completedLayout.setOnDragListener(new MyDragListener());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		// get storage data
-		dataSet = DataKeeper
-				.readData(MainActivity.this.getApplicationContext());
+		try {
+			dataSet = DataKeeper.readData(MainActivity.this
+					.getApplicationContext());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		if (dataSet == null || dataSet.isEmpty()) {
 			Log.i("wh", "init test data...");
@@ -126,10 +134,14 @@ public class MainActivity extends FragmentActivity {
 
 		// put data
 
-		putData(backlogLayout, dataSet.getBacklog());
-		putData(planLayout, dataSet.getPlan());
-		putData(inProcessLayout, dataSet.getInProcess());
-		putData(completedLayout, dataSet.getCompleted());
+		try {
+			putData(backlogLayout, dataSet.getBacklog());
+			putData(planLayout, dataSet.getPlan());
+			putData(inProcessLayout, dataSet.getInProcess());
+			putData(completedLayout, dataSet.getCompleted());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

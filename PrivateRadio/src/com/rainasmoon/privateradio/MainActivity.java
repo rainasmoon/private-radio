@@ -1,15 +1,10 @@
 package com.rainasmoon.privateradio;
 
 import java.io.File;
-import java.util.Locale;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -24,9 +19,7 @@ import android.widget.Toast;
 import com.rainasmoon.privateradio.business.impl.PrivateRadio;
 import com.rainasmoon.privateradio.business.impl.TtsHandler;
 import com.rainasmoon.privateradio.sourcechanel.localmedia.SetFileFolder;
-import com.rainasmoon.privateradio.utils.AccessTokenKeeper;
 import com.rainasmoon.privateradio.utils.Utils;
-import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
 public class MainActivity extends Activity {
 
@@ -62,7 +55,6 @@ public class MainActivity extends Activity {
 
 	}
 
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -93,24 +85,26 @@ public class MainActivity extends Activity {
 	}
 
 	public void stopRadio(View view) {
-		
+
 		Log.i(TAG, "stop...");
-		
-		TtsHandler.instanceTtsHandler(null).playTest();
-		
-		Toast.makeText(getApplicationContext(),
-				"功能还在开发中哦...亲", Toast.LENGTH_SHORT)
-				.show();
+
+		// TtsHandler.instanceTtsHandler(null).playTest();
+
+		MyLocation my = new MyLocation();
+		Log.i(TAG, "X:" + my.getLatitude());
+		Log.i(TAG, "Y:" + my.getLongitude());
+
+		Toast.makeText(getApplicationContext(), "功能还在开发中哦...亲",
+				Toast.LENGTH_SHORT).show();
 
 	}
 
 	public void likeIt(View view) {
 
 		Log.i(TAG, "likt it...");
-		TtsHandler.checkTtsData();				
-		Toast.makeText(getApplicationContext(),
-				"功能还在开发中哦...亲", Toast.LENGTH_SHORT)
-				.show();
+		TtsHandler.checkTtsData();
+		Toast.makeText(getApplicationContext(), "功能还在开发中哦...亲",
+				Toast.LENGTH_SHORT).show();
 
 	}
 
@@ -121,8 +115,6 @@ public class MainActivity extends Activity {
 
 	}
 
-
-	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// Check which request it is that we're responding to
@@ -143,14 +135,10 @@ public class MainActivity extends Activity {
 				com.rainasmoon.privateradio.sourcechanel.localmedia.LocalMediaConstants.MY_PICK_SONG_URI = uri;
 
 			}
-		} 
-		else if (requestCode == TtsHandler.REQ_CHECK_TTS_DATA) {
+		} else if (requestCode == TtsHandler.REQ_CHECK_TTS_DATA) {
 			TtsHandler.checkTts(resultCode);
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
-
-	
 
 }
